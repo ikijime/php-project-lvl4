@@ -1,0 +1,37 @@
+name: Main workflow
+
+on:
+  pull_request:
+    branches:
+      - 'main'
+  push:
+    branches:
+      - 'main'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+
+    - name: PHP Security Checker
+      uses: StephaneBour/actions-php-security-checker@1.1
+
+    - name: Setup project
+      run: make setup
+
+    - name: Check lint
+      run: make lint
+
+    - name: Execute tests (Unit and Feature tests) via PHPUnit
+      run: make test
+
+    - name: Run test & publish code coverage
+      uses: paambaati/codeclimate-action@v2.6.0
+      # Add Code Climate secret key
+      env:
+        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+      with:
+        coverageCommand: composer test-coverage
+        coverageLocations: ${{github.workplace}}/build/logs/clover.xml:clover
+        debug: true
