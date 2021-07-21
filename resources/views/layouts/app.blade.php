@@ -20,8 +20,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <header>
+        <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
                     {{ config('app.name', 'Менеджер задачы') }}
@@ -82,10 +82,23 @@
                 </div>
             </div>
         </nav>
+        </header> 
 
-        <main class="py-4">
-            @yield('content')
+        <main class="app-content py-4">
+            <div class="container">
+                
+                @yield('content')
+            </div>
         </main>
-    </div>
+
+        <footer>
+            <div class="container">
+                <div class="border-top pt-3">
+                    @yield('breadcrumbs')
+                </div>
+            </div>
+
+            
+        </footer>
 </body>
 </html>

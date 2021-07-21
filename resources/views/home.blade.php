@@ -1,6 +1,13 @@
 @extends('layouts.app')
 
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('home') }}
+@endsection
+
 @section('content')
+
+
+
 <div class="container">
     <div class="jumbotron">
         <h1 class="display-4">Some title</h1>
