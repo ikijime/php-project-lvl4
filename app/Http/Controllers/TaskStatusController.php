@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\TaskStatus;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskStatusController extends Controller
 {
@@ -12,8 +14,9 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        //
+    {   
+        $taskStatuses = DB::select('select * from task_statuses');
+        return view('taskStatuses.index', ['taskStatuses' => $taskStatuses]);
     }
 
     /**
@@ -23,7 +26,7 @@ class TaskStatusController extends Controller
      */
     public function create()
     {
-        //
+        return view('taskStatuses.create');
     }
 
     /**
@@ -34,7 +37,8 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        TaskStatus::create($request->only(['name']));
+        return redirect('task_statuses');
     }
 
     /**
@@ -45,7 +49,8 @@ class TaskStatusController extends Controller
      */
     public function show($id)
     {
-        //
+        $taskStatus = TaskStatus::whereNotNull('published_at')->findOrFail($id);
+        return view('taskStatuses.show', ['taskStatus' => $taskStatus]);
     }
 
     /**

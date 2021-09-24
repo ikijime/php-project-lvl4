@@ -5,7 +5,7 @@
     <h1 class="mb-5">Задачи</h1>
     <div class="d-flex">
             <div>
-                <form method="GET" action="https://php-l4-task-manager.herokuapp.com/tasks" accept-charset="UTF-8" class="form-inline">
+                <form method="GET" action="/tasks" accept-charset="UTF-8" class="form-inline">
                 <select class="form-control mr-2" name="filter[status_id]"><option selected="selected" value="">Статус</option></select>
                     <select class="form-control mr-2" name="filter[created_by_id]"><option selected="selected" value="">Автор</option></select>
                     <select class="form-control mr-2" name="filter[assigned_to_id]"><option selected="selected" value="">Исполнитель</option></select>
@@ -24,14 +24,18 @@
                     <th>Дата создания</th>
                                 </tr>
             </thead>
-                        <tr>
-                    <td>1</td>
-                    <td>some status</td>
+                @foreach($tasks as $task)
+                    <td>$task->id</td>
+                    <td>$task->status</td>
                     <td>
-                        <a href="https://php-l4-task-manager.herokuapp.com/tasks/1">
-                            some task
+                        <a href="https://php-l4-task-manager.herokuapp.com/tasks/{{ $task->id }}">
+                            $task->name
                         </a>
                     </td>
+                    <td>$task->author</td>
+                    <td>$task->executor</td>
+                    <td>$task->created_at</td>
+                @endforeach
         </table>
 </main>
 @endsection
