@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -12,8 +13,9 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('tasks.index');
+    {   
+        $tasks = DB::select('select * from tasks');
+        return view('tasks.index', ['tasks' => $tasks]);
     }
 
     /**
@@ -45,7 +47,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**

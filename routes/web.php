@@ -24,19 +24,22 @@ Auth::routes();
 Auth::routes(['verify' => true]);
 
 Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->middleware('verified')->name('tasks');
+
 Route::get('/task_statuses', [App\Http\Controllers\TaskStatusController::class, 'index'])->name('task_statuses');
+Route::get('/task_statuses/create', [App\Http\Controllers\TaskStatusController::class, 'create']);
+Route::post('/task_statuses', [App\Http\Controllers\TaskStatusController::class, 'store'])->name('store_task_status');
+Route::get('/task_statuses/{id}/edit', [App\Http\Controllers\TaskStatusController::class, 'edit']);
+
 Route::get('/labels', [App\Http\Controllers\LabelController::class, 'index'])->name('labels');
 
 Route::get('/email/verify', function () {
     return view('auth.verify');
 })->middleware('auth')->name('verification.notice');
 
-
 Route::get('/email/verify/{id}/{hash}', function (EmailVerificationRequest $request) {
     $request->fulfill();
     return redirect('/');
 })->middleware(['auth', 'signed'])->name('verification.verify');
-
 
 Route::post('/email/verification-notification', function (Request $request) {
     $request->user()->sendEmailVerificationNotification();
