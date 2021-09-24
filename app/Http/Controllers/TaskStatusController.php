@@ -14,7 +14,7 @@ class TaskStatusController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $taskStatuses = DB::select('select * from task_statuses');
         return view('taskStatuses.index', ['taskStatuses' => $taskStatuses]);
     }

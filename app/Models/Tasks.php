@@ -16,6 +16,6 @@ class Task extends Authenticatable implements MustVerifyEmail
         'name',
         'author',
         'status',
-        
+
     ];
 }
