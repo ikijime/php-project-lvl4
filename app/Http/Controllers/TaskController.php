@@ -13,7 +13,7 @@ class TaskController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $tasks = DB::select('select * from tasks');
         return view('tasks.index', ['tasks' => $tasks]);
     }
@@ -47,7 +47,6 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-
     }
 
     /**
