@@ -6,6 +6,11 @@
 
 <main class="container">
     <h1 class="mb-5">Статусы Задач</h1>
+
+    @if (Auth::User()) 
+        <a href="/task_statuses/create" class="btn btn-primary ml-auto">Создать статус</a>
+    @endif
+
     <table class="table mt-2">
             <thead>
                 <tr>

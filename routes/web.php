@@ -23,7 +23,8 @@ Route::get('/', function () {
 Auth::routes();
 Auth::routes(['verify' => true]);
 
-Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->middleware('verified')->name('tasks');
+Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks');
+Route::get('/tasks/create', [App\Http\Controllers\TaskController::class, 'create'])->name('create_task');
 
 Route::get('/task_statuses', [App\Http\Controllers\TaskStatusController::class, 'index'])->name('task_statuses');
 Route::get('/task_statuses/create', [App\Http\Controllers\TaskStatusController::class, 'create']);
@@ -31,6 +32,7 @@ Route::post('/task_statuses', [App\Http\Controllers\TaskStatusController::class,
 Route::get('/task_statuses/{id}/edit', [App\Http\Controllers\TaskStatusController::class, 'edit']);
 
 Route::get('/labels', [App\Http\Controllers\LabelController::class, 'index'])->name('labels');
+Route::get('/labels/create', [App\Http\Controllers\LabelController::class, 'create'])->name('create_label');
 
 Route::get('/email/verify', function () {
     return view('auth.verify');
