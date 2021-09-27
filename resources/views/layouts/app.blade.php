@@ -86,7 +86,6 @@
 
         <main class="app-content py-4">
             <div class="container">
-                
                 @yield('content')
             </div>
         </main>
@@ -97,8 +96,6 @@
                     @yield('breadcrumbs')
                 </div>
             </div>
-
-            
         </footer>
 </body>
 </html>

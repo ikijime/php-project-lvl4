@@ -12,6 +12,9 @@
                     <input class="btn btn-outline-primary mr-2" type="submit" value="Применить">
                 </form>
             </div>
+            @if (Auth::User()) 
+                <a href="/tasks/create" class="btn btn-primary ml-auto">Создать задачу</a>
+            @endif
     </div>
         <table class="table mt-2">
             <thead>
@@ -28,7 +31,7 @@
                     <td>$task->id</td>
                     <td>$task->status</td>
                     <td>
-                        <a href="https://php-l4-task-manager.herokuapp.com/tasks/{{ $task->id }}">
+                        <a href="/tasks/{{ $task->id }}">
                             $task->name
                         </a>
                     </td>
