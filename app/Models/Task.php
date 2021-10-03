@@ -14,7 +14,10 @@ class Task extends Authenticatable implements MustVerifyEmail
 
     protected $fillable = [
         'name',
-        'author',
-        'status',
+        'author_id',
+        'description',
+        'status_id',
+        'assigned_to_id'
     ];
+
 }

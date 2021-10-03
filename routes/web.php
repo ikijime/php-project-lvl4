@@ -25,6 +25,7 @@ Auth::routes(['verify' => true]);
 
 Route::get('/tasks', [App\Http\Controllers\TaskController::class, 'index'])->name('tasks');
 Route::get('/tasks/create', [App\Http\Controllers\TaskController::class, 'create'])->name('create_task');
+Route::post('/tasks', [App\Http\Controllers\TaskController::class, 'store']);
 
 Route::get('/task_statuses', [App\Http\Controllers\TaskStatusController::class, 'index'])->name('task_statuses');
 Route::get('/task_statuses/create', [App\Http\Controllers\TaskStatusController::class, 'create']);
