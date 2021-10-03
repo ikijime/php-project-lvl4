@@ -16,7 +16,7 @@ class StatusesTest extends TestCase
 
     public function a_user_can_browse_statuses()
     {
-        $response = $this->get('/tasks');
+        $response = $this->get('/task_statuses');
         $response->assertStatus(200);
     }
 
@@ -24,7 +24,7 @@ class StatusesTest extends TestCase
     public function a_authorized_user_can_create_status()
     {
         $user = User::factory()->create();
-        
+
         $status = TaskStatus::factory()->create();
 
         $this->followingRedirects();
