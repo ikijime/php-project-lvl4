@@ -18,10 +18,10 @@
             </tr>
         </thead>
             <tr>
-                <td>1</td>
-                <td>Name</td>
-                <td>Description</td>
-                <td>10.10.1994</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
     </table>
 </main>

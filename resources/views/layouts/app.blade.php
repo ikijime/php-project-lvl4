@@ -93,7 +93,9 @@
             </ul>
         </div>
         @endif
-        
+
+        @include('flash::message')
+
         <main class="app-content py-4">
             <div class="container">
                 @yield('content')
