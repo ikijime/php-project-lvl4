@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use App\Models\User;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
@@ -20,7 +22,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = DB::select('select * from tasks');
+        $tasks = Task::with('creator', 'executor', 'status')->get();
         return view('tasks.index', compact('tasks'));
     }
 
@@ -42,24 +44,30 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $userName = auth()->user()->name;
         request()->validate([
-            'name' => 'required',
+            'name' => 'required|unique:tasks',
             'description' => 'required',
-            'assigned_to_id' => "required",
             'status_id' => "required"
         ]);
 
-        $task = Task::create([
-            'author_id' => $userName,
+        //dd($request);
+        $newTask = new Task;
+
+        $newTask->fill([
+            'author_id' => Auth::id(),
             'name' => request('name'),
             'status_id' => request('status_id'),
             'description' => request('description'),
             'assigned_to_id' => request('assigned_to_id')
         ]);
 
-        return redirect(route('/tasks'))
-            ->with('flash', 'Task has been published');
+        if ($newTask->save()) {
+            flash('Task has been published', 'success');
+            return redirect('/tasks');
+        } else {
+            flash('Something went wrong while creating task');
+            return redirect('/tasks');
+        }
     }
 
     /**

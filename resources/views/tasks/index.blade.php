@@ -25,20 +25,22 @@
                     <th>Автор</th>
                     <th>Исполнитель</th>
                     <th>Дата создания</th>
-                                </tr>
+                </tr>
             </thead>
                 @foreach($tasks as $task)
-                    <td>$task->id</td>
-                    <td>$task->status</td>
+                <tr>
+                    <td>{{ $task->id }}</td>
+                    <td>{{ $task->status->name }}</td>
                     <td>
                         <a href="/tasks/{{ $task->id }}">
-                            $task->name
+                           {{ $task->name }} 
                         </a>
                     </td>
-                    <td>$task->author</td>
-                    <td>$task->executor</td>
-                    <td>$task->created_at</td>
+                    <td>{{ $task->creator->name }}</td>
+                    <td>{{ $task->executor->name }}</td>
+                    <td>{{ $task->created_at }}</td>
                 @endforeach
+                </tr>
         </table>
 </main>
 @endsection
