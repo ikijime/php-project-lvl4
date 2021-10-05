@@ -27,9 +27,8 @@ class TaskFactory extends Factory
             'author_id' => User::factory(),
             'status_id' => TaskStatus::factory(),
             'assigned_to_id' => User::factory(),
-            'name'=>  $this->faker->text(20),
+            'name' =>  $this->faker->text(20),
             'description' =>  $this->faker->paragraph()
         ];
     }
-
 }

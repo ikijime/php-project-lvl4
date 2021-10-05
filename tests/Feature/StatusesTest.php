@@ -5,12 +5,11 @@ namespace Tests\Feature;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\TaskStatus;
-use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class StatusesTest extends TestCase
 {
-
     /** @test */
     use DatabaseMigrations;
 
@@ -29,8 +28,9 @@ class StatusesTest extends TestCase
 
         $this->followingRedirects();
 
-        $response = $this->actingAs($user)->post('/task_statuses', $status->toArray());
+        Auth::login($user);
+        
+        $response = $this->post('/task_statuses', $status->toArray());
         $response->assertSee($status->name);
-
     }
 }
