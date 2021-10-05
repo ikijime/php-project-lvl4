@@ -10,7 +10,6 @@ use Illuminate\Support\Facades\Auth;
 
 class TasksTest extends TestCase
 {
-
     /** @test */
     use DatabaseMigrations;
 
@@ -31,7 +30,7 @@ class TasksTest extends TestCase
 
         $response = $this->post('/tasks', $task->toArray());
         $response->assertOk();
-        $response->assertSee('Task has been published');
+        $response->assertSee('Для просмотра необходима аутентификация');
     }
 
     /** @test */
@@ -47,6 +46,5 @@ class TasksTest extends TestCase
         $response = $this->post('/tasks', $task->toArray());
         $response->assertOk();
         $response->assertSee('Task has been published');
-
     }
 }

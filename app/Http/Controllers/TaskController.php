@@ -51,7 +51,7 @@ class TaskController extends Controller
         ]);
 
         //dd($request);
-        $newTask = new Task;
+        $newTask = new Task();
 
         $newTask->fill([
             'author_id' => Auth::id(),

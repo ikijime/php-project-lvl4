@@ -25,5 +25,4 @@ class TaskStatusFactory extends Factory
             'name' => $this->faker->word()
         ];
     }
-
 }

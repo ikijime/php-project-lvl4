@@ -18,5 +18,4 @@ class TaskStatus extends Authenticatable
     {
         return $this->belongsTo(Task::class);
     }
-
 }

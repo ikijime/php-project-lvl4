@@ -19,10 +19,8 @@ class DatabaseSeeder extends Seeder
 
         $users = User::factory(2)->create();
 
-        foreach ($users as $user)
-        {
+        foreach ($users as $user) {
             Task::factory(4)->create(['author_id' => $user->id]);
         }
     }
-
 }
