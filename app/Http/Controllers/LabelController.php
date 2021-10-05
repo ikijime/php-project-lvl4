@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Label;
 use Illuminate\Http\Request;
 
 class LabelController extends Controller
@@ -18,7 +19,8 @@ class LabelController extends Controller
      */
     public function index()
     {
-        return view('labels.index');
+        $labels = Label::all();
+        return view('labels.index', compact('labels'));
     }
 
     /**
@@ -28,7 +30,7 @@ class LabelController extends Controller
      */
     public function create()
     {
-        //
+        return view('labels.create');
     }
 
     /**
@@ -39,7 +41,21 @@ class LabelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required|unique:labels'
+        ]);
+
+        $label = new Label();
+        $label->name = $request->name;
+        $label->description = $request->description;
+
+        if ($label->save()) {
+            flash('New label created', 'success');
+            return redirect('/labels');
+        } else {
+            flash('Something went wrong while creating label');
+            return redirect('/labels');
+        }
     }
 
     /**

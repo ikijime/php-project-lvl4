@@ -33,6 +33,7 @@ Route::post('/task_statuses', [App\Http\Controllers\TaskStatusController::class,
 Route::get('/task_statuses/{id}/edit', [App\Http\Controllers\TaskStatusController::class, 'edit']);
 
 Route::get('/labels', [App\Http\Controllers\LabelController::class, 'index'])->name('labels');
+Route::post('/labels', [App\Http\Controllers\LabelController::class, 'store']);
 Route::get('/labels/create', [App\Http\Controllers\LabelController::class, 'create'])->name('create_label');
 
 Route::get('/email/verify', function () {

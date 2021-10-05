@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Task;
 use App\Models\User;
+use App\Models\Label;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -22,5 +23,7 @@ class DatabaseSeeder extends Seeder
         foreach ($users as $user) {
             Task::factory(4)->create(['author_id' => $user->id]);
         }
+
+        Label::factory(8)->create();
     }
 }
