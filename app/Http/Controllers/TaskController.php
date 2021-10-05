@@ -50,7 +50,6 @@ class TaskController extends Controller
             'status_id' => "required"
         ]);
 
-        //dd($request);
         $newTask = new Task();
 
         $newTask->fill([

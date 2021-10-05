@@ -8,4 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Label extends Model
 {
     use HasFactory;
+
+    public function task()
+    {
+        return $this->belongsToMany(Task::class);
+    }
 }

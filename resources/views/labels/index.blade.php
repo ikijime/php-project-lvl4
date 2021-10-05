@@ -17,12 +17,14 @@
                 <th>Дата создания</th>
             </tr>
         </thead>
+            @foreach ($labels as $label)
             <tr>
-                <td></td>
-                <td></td>
-                <td></td>
-                <td></td>
+                <td>{{ $label->id }}</td>
+                <td>{{ $label->name }}</td>
+                <td>{{ $label->description }}</td>
+                <td>{{ $label->created_at }}</td>
             </tr>
+            @endforeach
     </table>
 </main>
 @endsection

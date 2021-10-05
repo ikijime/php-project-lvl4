@@ -20,7 +20,7 @@ class StatusesTest extends TestCase
     }
 
     /** @test */
-    public function a_authorized_user_can_create_status()
+    public function an_authorized_user_can_create_status()
     {
         $user = User::factory()->create();
 
@@ -29,7 +29,7 @@ class StatusesTest extends TestCase
         $this->followingRedirects();
 
         Auth::login($user);
-        
+
         $response = $this->post('/task_statuses', $status->toArray());
         $response->assertSee($status->name);
     }
