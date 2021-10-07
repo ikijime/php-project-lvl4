@@ -50,8 +50,8 @@ class TaskController extends Controller
             'status_id' => "required"
         ]);
 
-        $newTask = new Task();
 
+        $newTask = new Task();
         $newTask->fill([
             'author_id' => Auth::id(),
             'name' => request('name'),
@@ -60,7 +60,9 @@ class TaskController extends Controller
             'assigned_to_id' => request('assigned_to_id')
         ]);
 
+
         if ($newTask->save()) {
+            $newTask->labels()->attach(request('labels'));
             flash('Task has been published', 'success');
             return redirect('/tasks');
         } else {
@@ -77,6 +79,9 @@ class TaskController extends Controller
      */
     public function show($id)
     {
+        $task = Task::findOrFail($id);
+        $labels = $task->labels()->get();
+        return view('tasks.show', compact('task', 'labels'));
     }
 
     /**

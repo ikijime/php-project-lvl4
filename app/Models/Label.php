@@ -9,8 +9,8 @@ class Label extends Model
 {
     use HasFactory;
 
-    public function task()
+    public function tasks()
     {
-        return $this->belongsToMany(Task::class);
+        return $this->belongsToMany(Task::class, 'tasks_labels')->withTimestamps();
     }
 }

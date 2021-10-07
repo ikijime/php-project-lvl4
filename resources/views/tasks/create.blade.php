@@ -41,7 +41,11 @@
 
         <div class="form-group">
             <label for="labels">Метки</label>
-            <select class="form-control" multiple name="labels[]"><option value=""></option><option value="0"></option></select>
+            <select class="form-control" multiple name="labels[]">
+                @foreach (App\Models\Label::all() as $label)
+                    <option value="{{ $label->id }} ">{{ $label->name }}</option>
+                @endforeach
+            </select>
         </div>
 
         <input class="btn btn-primary" type="submit" value="Создать">
