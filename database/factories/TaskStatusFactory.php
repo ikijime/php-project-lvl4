@@ -22,7 +22,7 @@ class TaskStatusFactory extends Factory
     public function definition()
     {
         return [
-            'name' => $this->faker->word()
+            'name' => $this->faker->unique()->word()
         ];
     }
 }

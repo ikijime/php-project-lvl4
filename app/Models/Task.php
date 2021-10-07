@@ -36,8 +36,8 @@ class Task extends Authenticatable implements MustVerifyEmail
         return $this->belongsTo('App\Models\User', 'assigned_to_id');
     }
 
-    public function label()
+    public function labels()
     {
-        return $this->hasMany('App\Models\Label');
+        return $this->belongsToMany('App\Models\Label', 'tasks_labels')->withTimestamps();
     }
 }
