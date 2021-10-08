@@ -34,7 +34,7 @@ class LabelsTest extends TestCase
     }
 
     /** @test */
-    public function an_authorized_user_can_create_task()
+    public function an_authorized_user_can_create_label()
     {
         $user = User::factory()->create();
         $label = Label::factory()->make();
