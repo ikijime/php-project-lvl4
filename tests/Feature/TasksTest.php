@@ -13,7 +13,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class TasksTest extends TestCase
 {
     use RefreshDatabase;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -28,7 +28,6 @@ class TasksTest extends TestCase
 
         Task::factory(2)->create(['author_id' => $this->user1->id]);
         Task::factory(2)->create(['author_id' => $this->user2->id]);
-
     }
 
     /** @test */
@@ -75,26 +74,23 @@ class TasksTest extends TestCase
     /** @test */
     public function a_user_can_filter_by_author()
     {
-        $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=+'.$this->user1->id.'+&filter[assigned_to_id]=');
+        $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=+' . $this->user1->id . '+&filter[assigned_to_id]=');
         $response->assertSee('<td>FirstUser</td>', $escaped = false);
         $response->assertDontSee('<td>SecondUser</td>', $escaped = false);
     }
 
-    
+
     /** @test */
     public function a_user_can_filter_by_executor_and_status()
     {
         Task::factory(2)->create(['assigned_to_id' => $this->user1->id, 'status_id' =>  $this->status1->id]);
         Task::factory(2)->create(['assigned_to_id' => $this->user2->id, 'status_id' => $this->status2->id]);
 
-        $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=&filter[assigned_to_id]=+'.$this->user1->id.'+');
+        $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=&filter[assigned_to_id]=+' . $this->user1->id . '+');
 
         $response->assertSee("<td>{$this->status1->name}</td>", $escaped = false);
         $response->assertSee('<td>FirstUser</td>', $escaped = false);
         $response->assertDontSee("<td>{$this->status2->name}</td>", $escaped = false);
         $response->assertDontSee('<td>SecondUser</td>', $escaped = false);
-
     }
-
-    
 }
