@@ -6,9 +6,24 @@
     <div class="d-flex">
             <div>
                 <form method="GET" action="/tasks" accept-charset="UTF-8" class="form-inline">
-                <select class="form-control mr-2" name="filter[status_id]"><option selected="selected" value="">Статус</option></select>
-                    <select class="form-control mr-2" name="filter[created_by_id]"><option selected="selected" value="">Автор</option></select>
-                    <select class="form-control mr-2" name="filter[assigned_to_id]"><option selected="selected" value="">Исполнитель</option></select>
+                <select class="form-control mr-2" name="filter[status_id]">
+                        <option selected="selected" value="">Статус</option>
+                            @foreach (\App\Models\TaskStatus::all() as $status)
+                                    <option value={{ $status->id }}>{{ $status->name }}</option>
+                            @endforeach
+                        </select>
+                    <select class="form-control mr-2" name="filter[author_id]">
+                        <option selected="selected" value="">Автор</option>
+                        @foreach (\App\Models\User::all() as $user)
+                            <option value=" {{ $user->id }} "> {{ $user->name }} </option>
+                        @endforeach
+                    </select>
+                    <select class="form-control mr-2" name="filter[assigned_to_id]">
+                        <option selected="selected" value="">Исполнитель</option>
+                        @foreach (\App\Models\User::all() as $user)
+                            <option  value=" {{ $user->id }} "> {{ $user->name }} </option>
+                        @endforeach
+                    </select>
                     <input class="btn btn-outline-primary mr-2" type="submit" value="Применить">
                 </form>
             </div>

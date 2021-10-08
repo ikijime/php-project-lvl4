@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
-use App\Models\User;
-use App\Models\TaskStatus;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
+use Spatie\QueryBuilder\QueryBuilder;
+use Spatie\QueryBuilder\AllowedFilter;
 
 class TaskController extends Controller
 {
@@ -22,7 +21,16 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::with('creator', 'executor', 'status')->get();
+        //$tasks = Task::with('creator', 'executor', 'status')->get();
+
+        $tasks = QueryBuilder::for(Task::with('creator', 'executor', 'status'))
+        ->allowedFilters([
+            AllowedFilter::exact('status_id'),
+            AllowedFilter::exact('author_id'),
+            AllowedFilter::exact('assigned_to_id')
+        ])
+        ->get();
+
         return view('tasks.index', compact('tasks'));
     }
 
