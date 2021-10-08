@@ -100,7 +100,15 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        // $task = Task::findOrFail($id);
+        // if (Auth::id() === $task->author_id) {
+        //     flash('Edit', 'info');
+        //     $labels = $task->labels()->get();
+        //     return view('tasks.show', compact('task', 'labels'));
+        // } else {
+        //     return view('ERROR');
+        // }
+        return "Edit";
     }
 
     /**
@@ -112,7 +120,6 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
     }
 
     /**
@@ -123,6 +130,6 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return 'Delete';
     }
 }
