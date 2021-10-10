@@ -11,6 +11,7 @@
     <p>Имя: {{ $task->name }}</p>
     <p>Статус: {{ $task->status->name }}</p>
     <p>Исполнитель: {{ $task->executor->name }}</p>
+    <p>Описание: {{ $task->description }}</p>
     <p>Метки: </p>
     <ul>
         @foreach ($labels as $label)

@@ -1,27 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
+@php $filterInput = app('request')->filter @endphp
 <main class="container">
     <h1 class="mb-5">Задачи</h1>
     <div class="d-flex">
         <div>
             <form method="GET" action="/tasks" accept-charset="UTF-8" class="form-inline">
-                <select class="form-control mr-2" name="filter[status_id]">
-                    <option selected="selected" value="">Статус</option>
+                <select class="form-control mr-2" name="filter[status_id]" id="status_id">
+                    <option value="">Статус</option>
                     @foreach (\App\Models\TaskStatus::all() as $status)
-                    <option value={{ $status->id }}>{{ $status->name }}</option>
+                    <option value="{{ $status->id }}" 
+                        @if(isset($filterInput['status_id']) && $filterInput['status_id'] == $status->id) @endif>
+                        {{ $status->name }}
+                    </option>
                     @endforeach
                 </select>
                 <select class="form-control mr-2" name="filter[author_id]">
-                    <option selected="selected" value="">Автор</option>
+                    <option value="">Автор</option>
                     @foreach (\App\Models\User::all() as $user)
-                    <option value=" {{ $user->id }} "> {{ $user->name }} </option>
+                    <option value="{{ $user->id }}"
+                        @if(isset($filterInput['author_id']) && $filterInput['author_id'] == $user->id) selected @endif>
+                        {{ $user->name }}
+                    </option>
                     @endforeach
                 </select>
                 <select class="form-control mr-2" name="filter[assigned_to_id]">
                     <option selected="selected" value="">Исполнитель</option>
                     @foreach (\App\Models\User::all() as $user)
-                    <option value=" {{ $user->id }} "> {{ $user->name }} </option>
+                    <option value=" {{ $user->id }} "
+                        @if(isset($filterInput['assigned_to_id']) && $filterInput['assigned_to_id'] == $user->id) selected @endif>
+                        {{ $user->name }} 
+                    </option>
                     @endforeach
                 </select>
                 <input class="btn btn-outline-primary mr-2" type="submit" value="Применить">
@@ -40,6 +50,9 @@
                 <th>Автор</th>
                 <th>Исполнитель</th>
                 <th>Дата создания</th>
+                @Auth()
+                <th>Действия</th>
+                @endauth
             </tr>
         </thead>
         @foreach($tasks as $task)
@@ -57,14 +70,14 @@
 
             @if (Auth::id() === $task->author_id)
             <td>
-            <div class="btn-group">
-                <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
-                <form action="/tasks/{{ $task->id }}" method="POST">
-                    @method('delete')
-                    @csrf
-                    <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>               
-                </form>
-            </div>
+                <div class="btn-group">
+                    <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
+                    <form action="/tasks/{{ $task->id }}" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                    </form>
+                </div>
             </td>
             @endif
 
