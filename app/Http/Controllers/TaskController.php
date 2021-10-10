@@ -21,8 +21,6 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //$tasks = Task::with('creator', 'executor', 'status')->get();
-
         $tasks = QueryBuilder::for(Task::with('creator', 'executor', 'status'))
         ->allowedFilters([
             AllowedFilter::exact('status_id'),
@@ -58,7 +56,6 @@ class TaskController extends Controller
             'status_id' => "required"
         ]);
 
-
         $newTask = new Task();
         $newTask->fill([
             'author_id' => Auth::id(),
@@ -67,7 +64,6 @@ class TaskController extends Controller
             'description' => request('description'),
             'assigned_to_id' => request('assigned_to_id')
         ]);
-
 
         if ($newTask->save()) {
             $newTask->labels()->attach(request('labels'));
@@ -100,14 +96,16 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        // $task = Task::findOrFail($id);
-        // if (Auth::id() === $task->author_id) {
-        //     flash('Edit', 'info');
-        //     $labels = $task->labels()->get();
-        //     return view('tasks.show', compact('task', 'labels'));
-        // } else {
-        //     return view('ERROR');
-        // }
+        $task = Task::findOrFail($id);
+
+        if (Auth::id() === $task->author_id) {
+            flash('Edit', 'info');
+            $labels = $task->labels()->get();
+            return view('tasks.update', compact('task', 'labels'));
+        } else {
+            return view('ERROR');
+        }
+
         return "Edit";
     }
 
@@ -120,6 +118,32 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+        request()->validate([
+            'name' => 'required',
+            'description' => 'required',
+            'status_id' => "required"
+        ]);
+
+        $task = Task::findOrFail($id);
+
+        $labels = Request('labels') ?? [];
+
+        $task->fill([
+            'name' => request('name'),
+            'status_id' => request('status_id'),
+            'description' => request('description'),
+            'assigned_to_id' => request('assigned_to_id')
+        ]);
+
+        if (is_null(request('labels'))) {
+            $task->labels()->sync([]);
+        } else {
+            $task->labels()->sync(request('labels'));
+        }
+        
+        $task->update();
+        flash('Updated successfully', 'success');
+        return redirect()->route('tasks.index');
     }
 
     /**
@@ -130,6 +154,9 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        return 'Delete';
+        $task = Task::findOrFail($id);
+        $task->Delete();
+        flash("Task {$task->name} has been deleted", 'danger');
+        return redirect()->route('tasks.index');
     }
 }
