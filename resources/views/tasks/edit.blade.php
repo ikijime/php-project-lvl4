@@ -5,7 +5,7 @@
 
     <h1 class="mb-5">Изменить задачу</h1>
 
-    <form method="POST" action=" {{ route('tasks.update', $task)}} " accept-charset="UTF-8" class="w-50">
+    <form method="POST" action=" {{ route('tasks.update', $task) }} " accept-charset="UTF-8" class="w-50">
         @method('PATCH')
         @csrf
         <div class="form-group">

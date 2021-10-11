@@ -23,6 +23,20 @@
                 <td>{{ $label->name }}</td>
                 <td>{{ $label->description }}</td>
                 <td>{{ $label->created_at }}</td>
+                
+                <td>
+                    <div class="btn-group">
+                        <a class="text-black" href="/labels/{{ $label->id }}/edit">Изменить</a>
+
+                        <form action="/labels/{{ $label->id }}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                        </form>
+
+                </div>
+                </td>
+                
             </tr>
             @endforeach
     </table>

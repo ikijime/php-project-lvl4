@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use App\Models\User;
-use App\Models\Label;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
@@ -12,6 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class TaskStatusTest  extends TestCase
 {
     use DatabaseMigrations;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -25,16 +25,31 @@ class TaskStatusTest  extends TestCase
     }
 
     /** @test */
-    public function task_status_create(): void
+    public function create_task_status(): void
     {
         $response = $this->get('/task_statuses/create');
         $response->assertOk();
     }
 
     /** @test */
-    public function task_status_show(): void
+    public function show_task_status(): void
     {
         $response = $this->get("/task_statuses/{$this->status1->id}");
         $response->assertRedirect();
+    }
+
+    /** @test */
+    public function edit_task_status(): void
+    {
+        $response = $this->get("/task_statuses/{$this->status1->id}/edit");
+        $response->assertOk();
+        $response->assertSee($this->status1->name);
+    }
+
+    /** @test */
+    public function delete_task_status(): void
+    {
+        $this->delete("/task_statuses/{$this->status1->id}");
+        $this->assertDatabaseMissing('task_statuses', ['name' => 'FirstStatus']);
     }
 }

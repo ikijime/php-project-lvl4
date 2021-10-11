@@ -24,6 +24,20 @@
                     <td> {{ $taskStatus->id }} </td>
                     <td> {{ $taskStatus->name }} </td>
                     <td> {{ $taskStatus->created_at }} </td>
+                    
+                    <td>
+                    <div class="btn-group">
+                        <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">Изменить</a>
+
+                        <form action="/task_statuses/{{ $taskStatus->id }}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                        </form>
+
+                    </div>
+                    </td>
+
                 </tr>
                 @endforeach
         </table>

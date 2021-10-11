@@ -101,7 +101,7 @@ class TaskController extends Controller
         if (Auth::id() === (int) $task->author_id) {
             flash('Edit', 'info');
             $labels = $task->labels()->get();
-            return view('tasks.update', compact('task', 'labels'));
+            return view('tasks.edit', compact('task', 'labels'));
         } else {
             flash('You must be owner of this task to edit.', 'warning');
             return redirect()->back();
