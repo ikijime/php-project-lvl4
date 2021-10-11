@@ -60,6 +60,13 @@ class TasksTest extends TestCase
         $response->assertOk();
         $response->assertSee($this->task->name);
         $response->assertSee('Task has been published');
+
+        $this->followingRedirects();
+        $response = $this->post('/tasks', $this->task->toArray());
+        $response->assertOk();
+        $response->assertSee($this->task->name);
+        $response->assertSee('The name has already been taken.');
+
     }
 
     /** @test */

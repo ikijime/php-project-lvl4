@@ -54,8 +54,7 @@ class TaskStatusController extends Controller
      */
     public function show($id)
     {
-        $taskStatus = TaskStatus::whereNotNull('published_at')->findOrFail($id);
-        return view('taskStatuses.show', ['taskStatus' => $taskStatus]);
+        return redirect()->route('task_statuses.index');
     }
 
     /**

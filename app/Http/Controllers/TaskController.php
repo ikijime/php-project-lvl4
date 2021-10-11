@@ -98,15 +98,14 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        if (Auth::id() === $task->author_id) {
+        if (Auth::id() === (int) $task->author_id) {
             flash('Edit', 'info');
             $labels = $task->labels()->get();
             return view('tasks.update', compact('task', 'labels'));
         } else {
-            return view('ERROR');
+            flash('You must be owner of this task to edit.', 'warning');
+            return redirect()->back();
         }
-
-        return "Edit";
     }
 
     /**
@@ -140,7 +139,7 @@ class TaskController extends Controller
         } else {
             $task->labels()->sync(request('labels'));
         }
-        
+
         $task->update();
         flash('Updated successfully', 'success');
         return redirect()->route('tasks.index');
