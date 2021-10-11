@@ -48,6 +48,10 @@
             "@putenv XDEBUG_MODE=coverage",
             "composer exec --verbose phpunit tests -- --coverage-clover build/logs/clover.xml"
         ],
+        "tc-html": [
+            "@putenv XDEBUG_MODE=coverage",
+            "composer exec --verbose phpunit tests -- --coverage-html build/logs/html"
+        ],
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
             "@php artisan package:discover --ansi"

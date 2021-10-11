@@ -13,7 +13,9 @@ class LabelTest extends TestCase
     /** @test */
     public function label_created_with_name(): void
     {
-        $label = Label::factory()->create(['name' => 'label1']);
-        $this->assertEquals('label1', $label->name);
+        $label1 = Label::factory()->create(['name' => 'label1']);
+        $label2 = Label::factory()->create(['name' => 'label2']);
+        $this->assertEquals('label1', $label1->name);
+        $this->assertEquals('label2', $label2->name);
     }
 }
