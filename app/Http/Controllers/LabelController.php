@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\Label;
 use Illuminate\Http\Request;
 
@@ -66,7 +67,7 @@ class LabelController extends Controller
      */
     public function show($id)
     {
-        //
+        return redirect('labels');
     }
 
     /**
@@ -77,7 +78,8 @@ class LabelController extends Controller
      */
     public function edit($id)
     {
-        //
+        $label = Label::findOrFail($id);
+        return view('labels.edit', compact('label'));
     }
 
     /**
@@ -89,7 +91,21 @@ class LabelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+
+        $label = Label::findOrFail($id);
+
+        $label->fill([
+            'name' => request('name'),
+            'description' => request('description')
+        ]);
+
+        $label->update();
+        flash('Updated successfully', 'success');
+        return redirect()->route('labels.index');
     }
 
     /**
@@ -100,6 +116,9 @@ class LabelController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $label = Label::findOrFail($id);
+        $label->Delete();
+        flash("Label {$label->name} has been deleted", 'danger');
+        return redirect()->route('labels.index');
     }
 }

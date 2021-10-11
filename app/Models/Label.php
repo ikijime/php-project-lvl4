@@ -9,6 +9,8 @@ class Label extends Model
 {
     use HasFactory;
 
+    protected $fillable = ['name', 'description'];
+
     public function tasks()
     {
         return $this->belongsToMany(Task::class, 'tasks_labels')->withTimestamps();

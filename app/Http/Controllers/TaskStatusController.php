@@ -65,7 +65,8 @@ class TaskStatusController extends Controller
      */
     public function edit($id)
     {
-        //
+        $status = TaskStatus::FindOrFail($id);
+        return view('taskStatuses.edit', compact('status'));
     }
 
     /**
@@ -88,6 +89,9 @@ class TaskStatusController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $status = TaskStatus::findOrFail($id);
+        $status->Delete();
+        flash("Status {$status->name} has been deleted", 'danger');
+        return redirect()->route('task_statuses.index');
     }
 }

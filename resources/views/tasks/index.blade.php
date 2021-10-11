@@ -68,18 +68,22 @@
             <td>{{ $task->executor->name }}</td>
             <td>{{ $task->created_at }}</td>
 
-            @if (Auth::id() === $task->author_id)
+            
             <td>
                 <div class="btn-group">
-                    <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
-                    <form action="/tasks/{{ $task->id }}" method="POST">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
-                    </form>
+                    @if (Auth::id())
+                        <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
+                    @endif
+                    @if (Auth::id() === $task->author_id)
+                        <form action="/tasks/{{ $task->id }}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                        </form>
+                    @endif
                 </div>
             </td>
-            @endif
+            
 
             @endforeach
         </tr>
