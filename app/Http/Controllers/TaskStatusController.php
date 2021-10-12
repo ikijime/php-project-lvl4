@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -78,7 +79,15 @@ class TaskStatusController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        request()->validate([
+            'name' => 'required'
+        ]);
+
+        $task = TaskStatus::findOrFail($id);
+        $task->update(['name' => request('name')]);
+
+        flash('Updated successfully', 'success');
+        return redirect()->route('task_statuses.index');
     }
 
     /**
