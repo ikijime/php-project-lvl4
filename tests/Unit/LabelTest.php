@@ -15,7 +15,7 @@ class LabelTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user1 = User::factory()->create(['name' => 'FirstUser']);
         $this->user2 = User::factory()->create(['name' => 'SecondUser']);
         $this->label1 = Label::factory()->create(['name' => 'label1']);

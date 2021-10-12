@@ -66,7 +66,6 @@ class TasksTest extends TestCase
         $response->assertOk();
         $response->assertSee($this->task->name);
         $response->assertSee('The name has already been taken.');
-
     }
 
     /** @test */

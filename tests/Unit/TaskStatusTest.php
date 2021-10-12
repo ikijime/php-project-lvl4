@@ -8,14 +8,14 @@ use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
-class TaskStatusTest  extends TestCase
+class TaskStatusTest extends TestCase
 {
     use DatabaseMigrations;
 
     public function setUp(): void
     {
         parent::setUp();
-        
+
         $this->user1 = User::factory()->create(['name' => 'FirstUser']);
         $this->user2 = User::factory()->create(['name' => 'SecondUser']);
 

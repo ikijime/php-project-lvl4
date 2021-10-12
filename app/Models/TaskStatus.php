@@ -16,6 +16,6 @@ class TaskStatus extends Authenticatable
 
     public function task()
     {
-        return $this->belongsTo(Task::class);
+        return $this->hasMany(Task::class, 'status_id');
     }
 }

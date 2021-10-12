@@ -17,28 +17,27 @@
                 <th>Дата создания</th>
             </tr>
         </thead>
-            @foreach ($labels as $label)
-            <tr>
-                <td>{{ $label->id }}</td>
-                <td>{{ $label->name }}</td>
-                <td>{{ $label->description }}</td>
-                <td>{{ $label->created_at }}</td>
-                
-                <td>
-                    <div class="btn-group">
-                        <a class="text-black" href="/labels/{{ $label->id }}/edit">Изменить</a>
+        @foreach ($labels as $label)
+        <tr>
+            <td>{{ $label->id }}</td>
+            <td>{{ $label->name }}</td>
+            <td>{{ $label->description }}</td>
+            <td>{{ $label->created_at }}</td>
+            @if (Auth::id())
+            <td>
+                <div class="btn-group">
+                    <a class="text-black" href="/labels/{{ $label->id }}/edit">Изменить</a>
 
-                        <form action="/labels/{{ $label->id }}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
-                        </form>
-
+                    <form action="/labels/{{ $label->id }}" method="POST">
+                        @method('delete')
+                        @csrf
+                        <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                    </form>
                 </div>
-                </td>
-                
-            </tr>
-            @endforeach
+            </td>
+            @endif
+        </tr>
+        @endforeach
     </table>
 </main>
 @endsection

@@ -20,8 +20,8 @@ class TaskStatusController extends Controller
      */
     public function index()
     {
-        $taskStatuses = DB::select('select * from task_statuses');
-        return view('taskStatuses.index', ['taskStatuses' => $taskStatuses]);
+        $taskStatuses = TaskStatus::all();
+        return view('taskStatuses.index', compact('taskStatuses'));
     }
 
     /**
