@@ -125,8 +125,6 @@ class TaskController extends Controller
 
         $task = Task::findOrFail($id);
 
-        $labels = Request('labels') ?? [];
-
         $task->fill([
             'name' => request('name'),
             'status_id' => request('status_id'),
