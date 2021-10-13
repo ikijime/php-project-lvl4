@@ -23,13 +23,17 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
-Auth::routes();
 Auth::routes(['verify' => true]);
 
+Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->middleware('verified');
+Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->middleware('verified');
 Route::resource('tasks', TaskController::class);
+Route::get('/tasks/create', [TaskController::class, 'create'])->middleware('verified');
 
+Route::delete('/task_statuses/{id}', [TaskStatusController::class, 'destroy'])->middleware('verified');
 Route::resource('task_statuses', TaskStatusController::class);
 
+Route::delete('/labels/{id}', [LabelController::class, 'destroy'])->middleware('verified');
 Route::resource('labels', LabelController::class);
 
 Route::get('/email/verify', function () {

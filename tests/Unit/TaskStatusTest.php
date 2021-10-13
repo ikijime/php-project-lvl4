@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Tests\TestCase;
+use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
@@ -22,6 +23,8 @@ class TaskStatusTest extends TestCase
         Auth::login($this->user1);
         $this->status1 = TaskStatus::factory()->create(['name' => 'FirstStatus']);
         $this->status2 = TaskStatus::factory()->create(['name' => 'SecondStatus']);
+
+        $this->task1 = Task::factory()->create(['status_id' => $this->status2->id]);
     }
 
     /** @test */
