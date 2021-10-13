@@ -6,6 +6,7 @@ use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskStatusController extends Controller
 {
@@ -22,7 +23,10 @@ class TaskStatusController extends Controller
     public function index()
     {
         $taskStatuses = TaskStatus::all();
-        return view('taskStatuses.index', compact('taskStatuses'));
+        
+        $usedStatuses = Task::select('status_id')->distinct()->get()->toArray();
+        $usedStatusIds = collect($usedStatuses)->flatten(1);
+        return view('taskStatuses.index', compact('taskStatuses', 'usedStatusIds'));
     }
 
     /**

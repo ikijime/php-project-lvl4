@@ -1,9 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-
-@include('flash::message')
-
+@php $unableDeleteMessage = "Невозможно удалить статус пока он используется в задачах." @endphp
 <main class="container">
     <h1 class="mb-5">Статусы Задач</h1>
 
@@ -28,10 +26,24 @@
             <td>
                 <div class="btn-group">
                     <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">Изменить</a>
-                    @if($taskStatus->task()->count() == 0)
-                        <button type="button" data-toggle="modal" data-target="#deleteModal" class="btn btn-link text-danger pt-0">Удалить</button>
+
+                    @if( !$usedStatusIds->contains($taskStatus->id) )
+                    @php $deleteMessage = "Вы хотите удалить статуc {$taskStatus->name} ?" @endphp
+                        <button 
+                          type="button" 
+                          data-toggle="modal" 
+                          data-target="#deleteModal" 
+                          data-message="{{ $deleteMessage }}"
+                          data-id="{{ $taskStatus->id }}"
+                          class="btn btn-link text-danger pt-0">Удалить
+                      </button>
                     @else
-                        <button type="button" data-toggle="modal" data-target="#cannotDeleteModal" class="btn btn-link text-muted pt-0">Удалить</button>
+                        <button 
+                          type="button" 
+                          data-toggle="modal" 
+                          data-target="#cannotDeleteModal" 
+                          class="btn btn-link text-muted pt-0">Удалить
+                      </button>
                     @endif
 
                 </div>
@@ -42,49 +54,23 @@
     </table>
 
 <!-- Подтверждение удаления -->
-<div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Вы уверены что хотите удалить статус {{ $taskStatus->name ?? '' }}
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-        <form action="/task_statuses/{{ $taskStatus->id ?? '' }}" method="POST">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn btn-primary">Удалить</button>
-        </form>
-      </div>
-    </div>
-  </div>
-</div>
+<x-alert-confirm-delete></x-alert-unable-delete>
 <!-- Подтверждение удаления -->
 
-<!-- Невозможно удалить -->
-<div class="modal fade" id="cannotDeleteModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
-      </div>
-      <div class="modal-body">
-        Невозможно удалить статус {{ $taskStatus->name ?? '' }} пока он используется в задачах.
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Невозможно удалить -->
+ <!-- Невозможно удалить -->
+<x-alert-unable-delete :message="$unableDeleteMessage"></x-alert-unable-delete>
+ <!-- Невозможно удалить -->
 
+<script>
+$('#deleteModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var message = button.data('message') 
+  var id = button.data('id')
+
+  var modal = $(this)
+  modal.find('.alert-delete-form').attr('action', '/task_statuses/' + id)
+  modal.find('.modal-body').text(message)
+})
+</script>
 </main>
 @endsection
