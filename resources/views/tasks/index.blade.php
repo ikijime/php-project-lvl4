@@ -75,10 +75,18 @@
                         <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
                     @endif
                     @if (Auth::id() === $task->author_id)
+                    @php $deleteMessage = "Вы хотите удалить задание {$task->name} ?" @endphp
                         <form action="/tasks/{{ $task->id }}" method="POST">
                             @method('delete')
                             @csrf
-                            <button type="submit" class="btn btn-link text-danger pt-0">Удалить</button>
+                            <button 
+                                type="button" 
+                                data-toggle="modal" 
+                                data-target="#deleteModal" 
+                                data-message="{{ $deleteMessage }}"
+                                data-id="{{ $task->id }}"
+                                class="btn btn-link text-danger pt-0">Удалить
+                            </button>
                         </form>
                     @endif
                 </div>
@@ -88,5 +96,21 @@
             @endforeach
         </tr>
     </table>
+
+<!-- Подтверждение удаления -->
+<x-alert-confirm-delete></x-alert-unable-delete>
+<!-- Подтверждение удаления -->
+
+<script>
+$('#deleteModal').on('show.bs.modal', function (event) {
+  var button = $(event.relatedTarget) // Button that triggered the modal
+  var message = button.data('message') 
+  var id = button.data('id')
+
+  var modal = $(this)
+  modal.find('.alert-delete-form').attr('action', '/tasks/' + id)
+  modal.find('.modal-body').text(message)
+})
+</script>
 </main>
 @endsection
