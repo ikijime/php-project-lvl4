@@ -11,7 +11,7 @@
                     <option value="">Статус</option>
                     @foreach (\App\Models\TaskStatus::all() as $status)
                     <option value="{{ $status->id }}" 
-                        @if(isset($filterInput['status_id']) && $filterInput['status_id'] == $status->id) @endif>
+                        @if(isset($filterInput['status_id']) && $filterInput['status_id'] == $status->id) selected @endif>
                         {{ $status->name }}
                     </option>
                     @endforeach
