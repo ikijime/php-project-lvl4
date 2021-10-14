@@ -23,7 +23,7 @@ class TaskStatusController extends Controller
     public function index()
     {
         $taskStatuses = TaskStatus::all();
-        
+
         $usedStatuses = Task::select('status_id')->distinct()->get()->toArray();
         $usedStatusIds = collect($usedStatuses)->flatten(1);
         return view('taskStatuses.index', compact('taskStatuses', 'usedStatusIds'));

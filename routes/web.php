@@ -24,16 +24,16 @@ Route::get('/', function () {
 })->name('home');
 
 Auth::routes(['verify' => true]);
-
-Route::get('/tasks/{id}/edit', [TaskController::class, 'edit'])->middleware('verified');
-Route::delete('/tasks/{id}', [TaskController::class, 'destroy'])->middleware('verified');
+//->middleware('verified') Temporaly disabled
+Route::get('/tasks/{id}/edit', [TaskController::class, 'edit']);
+Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
 Route::resource('tasks', TaskController::class);
-Route::get('/tasks/create', [TaskController::class, 'create'])->middleware('verified');
+Route::get('/tasks/create', [TaskController::class, 'create']);
 
-Route::delete('/task_statuses/{id}', [TaskStatusController::class, 'destroy'])->middleware('verified');
+Route::delete('/task_statuses/{id}', [TaskStatusController::class, 'destroy']);
 Route::resource('task_statuses', TaskStatusController::class);
 
-Route::delete('/labels/{id}', [LabelController::class, 'destroy'])->middleware('verified');
+Route::delete('/labels/{id}', [LabelController::class, 'destroy']);
 Route::resource('labels', LabelController::class);
 
 Route::get('/email/verify', function () {

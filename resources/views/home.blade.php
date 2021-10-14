@@ -7,10 +7,14 @@
 @section('content')
 <div class="container">
     <div class="jumbotron">
-        <h1 class="display-4">Some title</h1>
-        <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or information.</p>
+        <h1 class="display-4">Менеджер задач</h1>
+        <p class="lead">Завершающий проект по профессии PHP-Программист на <a href="http://hexlet.io/">Hexlet.io</a> </p>
         <hr class="my-4">
-        <p>It uses utility classes for typography and spacing to space content out within the larger container.</p>
+        <p>
+            Небольшое приложение для создания задач. Позволяет назначать исполнителей и устанавливать метки. Подключена стандартная авторизация Laravel. В проекте закрепляются знания базовых CRUD операций Laravel, Eloquent отношений между таблицами(Один к одному, Множество к множеству и тд).
+            Используется фильтрация данных запроса при помощи spatie/laravel-query-builder.
+            Сайт в процессе разработки.
+        </p>
         <p class="lead">
             <a class="btn btn-primary btn-lg" href="#" role="button">Learn more</a>
         </p>
