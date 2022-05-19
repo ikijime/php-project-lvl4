@@ -3,7 +3,7 @@
 @section('content')
 <main class="container">
 
-    <h1 class="mb-3">Изменить метку</h1>
+    <h1 class="mb-3">{{ __("Change tag") }}</h1>
 
     <form method="POST" action="{{ route('labels.update', $label) }}" accept-charset="UTF-8" class="w-50">
         @method('PATCH')

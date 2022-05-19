@@ -3,12 +3,12 @@
 @section('content')
 @php $filterInput = app('request')->filter @endphp
 <main class="container">
-    <h1 class="mb-5">Задачи</h1>
+    <h1 class="mb-5">{{ __("Tasks") }}</h1>
     <div class="d-flex">
         <div>
             <form method="GET" action="/tasks" accept-charset="UTF-8" class="form-inline">
                 <select class="form-control mr-2" name="filter[status_id]" id="status_id">
-                    <option value="">Статус</option>
+                    <option value="">{{ __("Status") }}</option>
                     @foreach (\App\Models\TaskStatus::all() as $status)
                     <option value="{{ $status->id }}" 
                         @if(isset($filterInput['status_id']) && $filterInput['status_id'] == $status->id) selected @endif>
@@ -17,7 +17,7 @@
                     @endforeach
                 </select>
                 <select class="form-control mr-2" name="filter[author_id]">
-                    <option value="">Автор</option>
+                    <option value="">{{ __("Author") }}</option>
                     @foreach (\App\Models\User::all() as $user)
                     <option value="{{ $user->id }}"
                         @if(isset($filterInput['author_id']) && $filterInput['author_id'] == $user->id) selected @endif>
@@ -26,7 +26,7 @@
                     @endforeach
                 </select>
                 <select class="form-control mr-2" name="filter[assigned_to_id]">
-                    <option selected="selected" value="">Исполнитель</option>
+                    <option selected="selected" value="">{{ __("Executor") }}</option>
                     @foreach (\App\Models\User::all() as $user)
                     <option value=" {{ $user->id }} "
                         @if(isset($filterInput['assigned_to_id']) && $filterInput['assigned_to_id'] == $user->id) selected @endif>
@@ -34,24 +34,24 @@
                     </option>
                     @endforeach
                 </select>
-                <input class="btn btn-outline-primary mr-2" type="submit" value="Применить">
+                <input class="btn btn-outline-primary mr-2" type="submit" value="{{ __("Apply") }}">
             </form>
         </div>
         @if (Auth::User())
-        <a href="/tasks/create" class="btn btn-primary ml-auto">Создать задачу</a>
+        <a href="/tasks/create" class="btn btn-primary ml-auto">{{ __("Create task") }}</a>
         @endif
     </div>
     <table class="table mt-2">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Статус</th>
-                <th>Имя</th>
-                <th>Автор</th>
-                <th>Исполнитель</th>
-                <th>Дата создания</th>
+                <th>{{ __("Status") }}</th>
+                <th>{{ __("Name") }}</th>
+                <th>{{ __("Author") }}</th>
+                <th>{{ __("Executor") }}</th>
+                <th>{{ __("Creation date") }}</th>
                 @Auth()
-                <th>Действия</th>
+                <th>{{ __("Actions") }}</th>
                 @endauth
             </tr>
         </thead>
@@ -72,10 +72,9 @@
             <td>
                 <div class="btn-group">
                     @if (Auth::id())
-                        <a class="text-black" href="/tasks/{{ $task->id }}/edit">Изменить</a>
+                        <a class="text-black" href="/tasks/{{ $task->id }}/edit">{{ __("Change") }}</a>
                     @endif
-                    @if (Auth::id() === $task->author_id)
-                    @php $deleteMessage = "Вы хотите удалить задание {$task->name} ?" @endphp
+                    @if (Auth::id() === $task->author_id or Auth::user() && Auth::user()->isAdmin() )
                         <form action="/tasks/{{ $task->id }}" method="POST">
                             @method('delete')
                             @csrf
@@ -83,16 +82,14 @@
                                 type="button" 
                                 data-toggle="modal" 
                                 data-target="#deleteModal" 
-                                data-message="{{ $deleteMessage }}"
+                                data-message="{{ __('messages.tasksDelete', ['name' => $task->name]) }}"
                                 data-id="{{ $task->id }}"
-                                class="btn btn-link text-danger pt-0">Удалить
+                                class="btn btn-link text-danger pt-0">{{ __("Delete") }}
                             </button>
                         </form>
                     @endif
                 </div>
             </td>
-            
-
             @endforeach
         </tr>
     </table>

@@ -3,18 +3,18 @@
 @section('content')
 @php $unableDeleteMessage = "Невозможно удалить статус пока он используется в задачах." @endphp
 <main class="container">
-    <h1 class="mb-5">Статусы Задач</h1>
+    <h1 class="mb-5">{{ __("Task statuses") }}</h1>
 
     @if (Auth::User())
-    <a href="/task_statuses/create" class="btn btn-primary ml-auto">Создать статус</a>
+    <a href="/task_statuses/create" class="btn btn-primary ml-auto">{{ __("Create status") }}</a>
     @endif
 
     <table class="table mt-2">
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Имя</th>
-                <th>Дата создания</th>
+                <th>{{ __("Name") }}</th>
+                <th>{{ __("Creation date") }}</th>
             </tr>
         </thead>
         <tr>
@@ -25,24 +25,23 @@
             @if (Auth::id())
             <td>
                 <div class="btn-group">
-                    <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">Изменить</a>
+                    <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">{{ __("Change") }}</a>
 
                     @if( !$usedStatusIds->contains($taskStatus->id) )
-                    @php $deleteMessage = "Вы хотите удалить статуc {$taskStatus->name} ?" @endphp
                         <button 
                           type="button" 
                           data-toggle="modal" 
                           data-target="#deleteModal" 
-                          data-message="{{ $deleteMessage }}"
+                          data-message="{{ __('messages.tasksStatusesDelete', ['name' => $taskStatus->name]) }}"
                           data-id="{{ $taskStatus->id }}"
-                          class="btn btn-link text-danger pt-0">Удалить
+                          class="btn btn-link text-danger pt-0">{{ __("Delete") }}
                       </button>
                     @else
                         <button 
                           type="button" 
                           data-toggle="modal" 
                           data-target="#cannotDeleteModal" 
-                          class="btn btn-link text-muted pt-0">Удалить
+                          class="btn btn-link text-muted pt-0">{{ __("Delete") }}
                       </button>
                     @endif
 
