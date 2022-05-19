@@ -1,0 +1,22 @@
+{
+  "Task manager": "Менеджер задач",
+  "Tasks": "Задачи",
+  "Task statuses": "Статусы задач",
+  "Statuses": "Статусы",
+  "Tags": "Метки",
+  "Login": "Войти",
+  "Register": "Регистрация",
+  "Create": "Создать",
+  "Create tag": "Создать метку",
+  "Create task": "Создать задачу",
+  "Create status": "Создать статус",
+  "Creation date": "Дата создания",
+  "Name": "Имя",
+  "Description": "Описание",
+  "Change": "Изменить",
+  "Change status": "Изменить статус",
+  "Delete": "Удалить",
+  "Change tag": "Изменить метку",
+  "Executor": "Исполнитель",
+  "Apply": "Применить"
+}

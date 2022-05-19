@@ -7,7 +7,7 @@
 @section('content')
 <div class="container">
     <div class="jumbotron">
-        <h1 class="display-4">Менеджер задач</h1>
+        <h1 class="display-4">{{__('Task manager')}}</h1>
         <p class="lead">Завершающий проект по профессии PHP-Программист на <a href="http://hexlet.io/">Hexlet.io</a> </p>
         <hr class="my-4">
         <p>

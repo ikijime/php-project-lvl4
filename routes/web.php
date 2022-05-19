@@ -23,6 +23,13 @@ Route::get('/', function () {
     return view('home');
 })->name('home');
 
+// LOCALE SWITCHER
+Route::get('/language/{locale}', function ($locale) {
+    app()->setLocale($locale);
+    session()->put('locale', $locale);
+    return redirect()->back();
+})->name('language');
+
 Auth::routes(['verify' => true]);
 //->middleware('verified') Temporaly disabled
 Route::get('/tasks/{id}/edit', [TaskController::class, 'edit']);
@@ -50,3 +57,4 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+

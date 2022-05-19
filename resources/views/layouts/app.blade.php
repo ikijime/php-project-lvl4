@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Менеджер Задач') }}</title>
+    <title>{{ config('app.name', 'Task manager') }}</title>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" ></script>
@@ -24,7 +24,7 @@
         <nav class="navbar navbar-expand-md navbar-dark shadow-sm">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Менеджер задачы') }}
+                    {{ config('app.name', 'Task manager') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
@@ -34,13 +34,13 @@
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
                         <li class="nav-item">
-                            <a class="nav-link " href="/tasks">Задачи</a>
+                            <a class="nav-link " href="/tasks">{{__("Tasks")}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="/task_statuses">Статусы</a>
+                            <a class="nav-link " href="/task_statuses">{{__("Statuses")}}</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link " href="/labels">Метки</a>
+                            <a class="nav-link " href="/labels">{{__("Tags")}}</a>
                         </li>
                     </ul>
 
@@ -50,13 +50,13 @@
                         @guest
                             @if (Route::has('login'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Вход') }}</a>
+                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
                             @endif
 
                             @if (Route::has('register'))
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Регистрация') }}</a>
+                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
                             @endif
                         @else
@@ -78,6 +78,7 @@
                                 </div>
                             </li>
                         @endguest
+                        @include('components/language-switcher')
                     </ul>
                 </div>
             </div>

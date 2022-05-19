@@ -4,7 +4,7 @@
 <main class="container">
     <div class="col">
     <div class="row">
-        <h1 class="mb-2">Задачи</h1>
+        <h1 class="mb-2">{{ __("Tasks") }}</h1>
         @if (Auth::User()) 
             <div class="pl-2 pt-1 mt-2">
             <a href="/tasks/{{ $task->id }}/edit" >
@@ -16,12 +16,12 @@
         @endif
     </div>
     <div class="col">
-        <p>Автор: {{ $task->creator->name }}</p>
-        <p>Имя: {{ $task->name }}</p>
-        <p>Статус: {{ $task->status->name }}</p>
-        <p>Исполнитель: {{ $task->executor->name }}</p>
-        <p>Описание: {{ $task->description }}</p>
-        <p>Метки: </p>
+        <p>{{ __("Author") }}: {{ $task->creator->name }}</p>
+        <p>{{ __("Name") }}: {{ $task->name }}</p>
+        <p>{{ __("Status") }}: {{ $task->status->name }}</p>
+        <p>{{ __("Executor") }}: {{ $task->executor->name }}</p>
+        <p>{{ __("Description") }}: {{ $task->description }}</p>
+        <p>{{ __("Labels") }}: </p>
         <ul>
             @foreach ($labels as $label)
             <li>{{ $label->name }}</li>
