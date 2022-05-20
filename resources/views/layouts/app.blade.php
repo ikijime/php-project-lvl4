@@ -21,8 +21,8 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body>
-    <div id="app" class="container-lg">
+<body style="background-color: #f5f5f5">
+    <div id="app" class="container-lg" >
         <div class="row">
             <nav class="navbar navbar-expand-md shadow-sm">
                 <div class="container-fluid">

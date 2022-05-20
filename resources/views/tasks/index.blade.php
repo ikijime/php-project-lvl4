@@ -52,7 +52,7 @@ $filterInput = app('request')->filter;
             </form>
         </div>
     </div>
-    <table class="table table-striped">
+    <table class="table table-striped table-responsive">
         <thead>
             <tr>
                 <th class="text-center">ID</th>
