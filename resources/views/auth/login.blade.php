@@ -1,11 +1,5 @@
 @extends('layouts.app')
 
-@section('breadcrumbs')
-    {{ Breadcrumbs::render('login') }}
-@endsection
-
-
-
 @section('content')
 
 @include('flash::message')
@@ -79,4 +73,8 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('login') }}
 @endsection

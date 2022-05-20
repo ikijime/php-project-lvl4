@@ -12,7 +12,12 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class TaskTest extends TestCase
 {
     use DatabaseMigrations;
-
+    private Task $task1;
+    private $tasks;
+    private User $user1;
+    private User $user2;
+    private TaskStatus $status1;
+    
     public function setUp(): void
     {
         parent::setUp();
@@ -29,14 +34,13 @@ class TaskTest extends TestCase
     {
         $response = $this->get('/tasks/create');
         $response->assertOk();
-        $response->assertSee('Создать задачу');
+        $response->assertSee('Create task');
     }
 
 
     /** @test */
     public function edit_task(): void
     {
-
         $taskid = $this->task1->id;
         $response = $this->get("/tasks/{$taskid}/edit");
         $response->assertOk();

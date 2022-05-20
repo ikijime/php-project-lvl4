@@ -10,6 +10,9 @@ setup:
 	php artisan db:seed
 	npm install
 
+stan:
+	composer run phpstan app/
+
 watch:
 	npm run watch
 
@@ -32,4 +35,4 @@ lint:
 	composer phpcs
 
 lint-fix:
-	phpcbf
+	composer run phpcbf app

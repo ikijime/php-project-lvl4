@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'unableDeleteTaskStatus' => 'Невозможно удалить статус пока он используется в задачах.',
     'tasksStatusesDelete' => 'Удалить статус задачи :name ?',
-    'tasksDelete' => 'Вы хотите удалить задание :name ?'
+    'taskDelete' => 'Вы хотите удалить задание :name ?'
 ];

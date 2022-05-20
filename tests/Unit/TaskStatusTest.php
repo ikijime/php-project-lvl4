@@ -13,6 +13,12 @@ class TaskStatusTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private $user1;
+    private $user2;
+    private $status1;
+    private $status2;
+    private $task1;
+
     public function setUp(): void
     {
         parent::setUp();

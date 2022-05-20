@@ -19,7 +19,7 @@
         </div>
 
         <input class="btn btn-primary" type="submit" value="{{ __("Create") }}">
-        
+
     </form>
 
 </main>

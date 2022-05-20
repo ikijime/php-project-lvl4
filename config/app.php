@@ -95,7 +95,7 @@ return [
         'English' => 'en',
         'Russian' => 'ru'
     ],
-    
+
     /*
     |--------------------------------------------------------------------------
     | Application Fallback Locale

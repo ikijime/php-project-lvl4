@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
-        
+
         // Locale
         view()->composer('components.language-switcher', function ($view) {
             $view->with('current_locale', app()->getLocale());

@@ -13,14 +13,14 @@ class LabelsTest extends TestCase
     /** @test */
     use DatabaseMigrations;
 
+    /** @test */
+    use DatabaseMigrations;
+
     public function a_user_can_browse_labels()
     {
         $response = $this->get('/labels');
         $response->assertStatus(200);
     }
-
-    /** @test */
-    use DatabaseMigrations;
 
     public function an_unauthorized_user_cant_create_label()
     {

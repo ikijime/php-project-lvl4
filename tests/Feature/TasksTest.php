@@ -40,7 +40,6 @@ class TasksTest extends TestCase
     /** @test */
     public function an_unauthorized_user_cant_create_task()
     {
-
         $this->followingRedirects();
 
         $response = $this->post('/tasks', $this->task->toArray());

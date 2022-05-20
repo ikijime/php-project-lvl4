@@ -11,7 +11,7 @@ class Task extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory;
     use Notifiable;
-
+    
     protected $guarded = [];
     protected $fillable = [
         'name',

@@ -19,23 +19,22 @@
 
         <div class="form-group">
             <label for="status_id">{{ __("Status") }}</label>
-            <select class="form-control"  id="status_id" name="status_id">
-            @foreach (App\Models\TaskStatus::all() as $status)
-                <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
-                    {{ $status->name }}
-                </option>  
-            @endforeach  
+            <select class="form-control" id="status_id" name="status_id">
+                @foreach (App\Models\TaskStatus::all() as $status)
+                <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}> {{ $status->name }}
+                </option>
+                @endforeach
             </select>
         </div>
 
         <div class="form-group">
             <label for="assigned_to_id">{{ __("Executor") }}</label>
-            <select class="form-control"  id="assigned_to_id" name="assigned_to_id">
-            @foreach (App\Models\User::all() as $user)
+            <select class="form-control" id="assigned_to_id" name="assigned_to_id">
+                @foreach (App\Models\User::all() as $user)
                 <option value="{{ $user->id }}" {{ old('assigned_to_id') == $user->id ? 'selected' : '' }}>
                     {{ $user->name }}
-                </option>  
-            @endforeach  
+                </option>
+                @endforeach
             </select>
         </div>
 
@@ -43,7 +42,7 @@
             <label for="labels">{{ __("Tags") }}</label>
             <select class="form-control" multiple name="labels[]">
                 @foreach (App\Models\Label::all() as $label)
-                    <option value="{{ $label->id }} ">{{ $label->name }}</option>
+                <option value="{{ $label->id }} ">{{ $label->name }}</option>
                 @endforeach
             </select>
         </div>

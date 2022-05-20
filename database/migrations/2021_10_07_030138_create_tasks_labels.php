@@ -15,8 +15,10 @@ class CreateTasksLabels extends Migration
     {
         Schema::create('tasks_labels', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('task_id')->constrained()->onDelete('cascade');;
-            $table->foreignId('label_id')->constrained()->onDelete('cascade');;
+            $table->foreignId('task_id')->constrained()->onDelete('cascade');
+            ;
+            $table->foreignId('label_id')->constrained()->onDelete('cascade');
+            ;
             $table->timestamps();
         });
     }

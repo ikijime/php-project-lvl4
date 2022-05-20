@@ -75,3 +75,7 @@
     </div>
 </div>
 @endsection
+
+@section('breadcrumbs')
+    {{ Breadcrumbs::render('register') }}
+@endsection

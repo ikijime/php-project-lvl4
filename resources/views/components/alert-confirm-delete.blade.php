@@ -2,19 +2,16 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
-      Удалить?
+        {{ __("Confirm deletion") }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Отмена</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __("Close") }}</button>
         <form action="" method="POST" class="alert-delete-form">
-            @method('delete')
-            @csrf
-            <button type="submit" class="btn btn-primary">Удалить</button>
+          @method('delete')
+          @csrf
+          <button type="submit" class="btn btn-primary">{{ __("Delete?") }}</button>
         </form>
       </div>
     </div>

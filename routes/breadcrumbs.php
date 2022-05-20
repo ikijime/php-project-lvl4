@@ -14,16 +14,24 @@ Breadcrumbs::for('home', function (BreadcrumbTrail $trail) {
     $trail->push('Home', route('home'));
 });
 
-
-// Home > Blog
 Breadcrumbs::for('login', function (BreadcrumbTrail $trail) {
     $trail->parent('home');
-    $trail->push('login', route('login'));
+    $trail->push('Login', route('login'));
 });
 
+Breadcrumbs::for('register', function (BreadcrumbTrail $trail) {
+    $trail->parent('home');
+    $trail->push('Register', route('register'));
+});
 
-// // Home > Blog > [Category]
-// Breadcrumbs::for('category', function (BreadcrumbTrail $trail, $category) {
-//     $trail->parent('blog');
-//     $trail->push($category->title, route('category', $category));
-// });
+Breadcrumbs::for('tasks.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Tasks', route('tasks.index'));
+});
+
+Breadcrumbs::for('labels.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Labels', route('labels.index'));
+});
+
+Breadcrumbs::for('task_statuses.index', function (BreadcrumbTrail $trail) {
+    $trail->push('Statuses', route('task_statuses.index'));
+});
