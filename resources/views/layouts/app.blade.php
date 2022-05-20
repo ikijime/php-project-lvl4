@@ -102,10 +102,8 @@
         </div>
         <div class="row">
             <footer>
-                <div class="container fixed-bottom">
-                    <div class="border-top pt-3 breadcrumbs">
+                <div class="container fixed-bottom style="padding-left: 0px; padding-right: 0px;">
                         @yield('breadcrumbs')
-                    </div>
                 </div>
             </footer>
         </div>

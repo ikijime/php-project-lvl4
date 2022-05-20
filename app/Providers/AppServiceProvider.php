@@ -17,7 +17,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        if ($this->app->environment(['staging', 'production'])) {
+            $this->app->register(\Rollbar\Laravel\RollbarServiceProvider::class);
+       }
     }
 
     /**
@@ -27,6 +29,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        
         if ($this->app->environment('production')) {
             URL::forceScheme('https');
         }
