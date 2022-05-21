@@ -20,7 +20,7 @@ use Illuminate\Foundation\Auth\EmailVerificationRequest;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('home.index');
 })->name('home');
 
 // LOCALE SWITCHER
@@ -30,20 +30,14 @@ Route::get('/language/{locale}', function ($locale) {
     return redirect()->back();
 })->name('language');
 
-Auth::routes(['verify' => true]);
+Auth::routes();
 //->middleware('verified') Temporaly disabled
-Route::get('/tasks/{id}/edit', [TaskController::class, 'edit']);
-Route::delete('/tasks/{id}', [TaskController::class, 'destroy']);
+
 Route::resource('tasks', TaskController::class);
-Route::get('/tasks/create', [TaskController::class, 'create']);
-
-Route::delete('/task_statuses/{id}', [TaskStatusController::class, 'destroy']);
 Route::resource('task_statuses', TaskStatusController::class);
-
-Route::delete('/labels/{id}', [LabelController::class, 'destroy']);
 Route::resource('labels', LabelController::class);
 
-Route::get('/email/verify', function () {
+/* Route::get('/email/verify', function () {
     return view('auth.verify');
 })->middleware('auth')->name('verification.notice');
 
@@ -57,3 +51,4 @@ Route::post('/email/verification-notification', function (Request $request) {
 
     return back()->with('message', 'Verification link sent!');
 })->middleware(['auth', 'throttle:6,1'])->name('verification.send');
+ */

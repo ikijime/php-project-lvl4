@@ -34,7 +34,7 @@ class TaskTest extends TestCase
     {
         $response = $this->get('/tasks/create');
         $response->assertOk();
-        $response->assertSee('Create task');
+        $response->assertSee('Создать');
     }
 
 

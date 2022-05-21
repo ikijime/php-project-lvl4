@@ -5,7 +5,7 @@
 
     <h1 class="mb-5">{{__("Create task")}}</h1>
 
-    <form method="POST" action="/tasks" accept-charset="UTF-8" class="w-50">
+    <form method="POST" action="{{ route('tasks.store') }}" accept-charset="UTF-8" class="w-50">
         @csrf
         <div class="form-group">
             <label for="name">{{ __("Name") }}</label>
