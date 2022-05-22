@@ -1,6 +1,11 @@
 {
+  "Author": "Автор",
+  "Status": "Статус",
+  "Actions": "Действия",
   "Task manager": "Менеджер задач",
   "Tasks": "Задачи",
+  "Task": "Задача",
+  "Label": "Метка",
   "Task statuses": "Статусы задач",
   "Statuses": "Статусы",
   "Tags": "Метки",
@@ -9,6 +14,7 @@
   "Registration": "Регистрация",
   "Confirm Password": "Подтверждение",
   "Password": "Пароль",
+  "password": "пароль",
   "Create": "Создать",
   "Create tag": "Создать метку",
   "Create task": "Создать задачу",
@@ -26,5 +32,8 @@
   "Executor": "Исполнитель",
   "Apply": "Применить",
   "Learn more": "Узнать больше",
-  "Logout": "Выход"
+  "Logout": "Выход",
+  "Forgot Your Password?": "Забыли пароль?",
+  "Remember me": "Запомнить меня",
+  "Updated successfully": "Обновленно успешно"
 }

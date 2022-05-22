@@ -11,7 +11,7 @@
         <form action="" method="POST" class="alert-delete-form">
           @method('delete')
           @csrf
-          <button type="submit" class="btn btn-primary">{{ __("Delete?") }}</button>
+          <button type="submit" class="btn btn-primary">{{ __("Delete") }}</button>
         </form>
       </div>
     </div>

@@ -1,12 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-@php
-$filterInput = app('request')->filter;
-@endphp
+@php $filterInput = app('request')->filter; @endphp
 <main class="container py-2">
     <h1 class="mb-4">{{ __("Tasks") }}</h1>
-    <div class="d-flex mb-3">
+    <div class="d-flex">
         <div>
             <form method="GET" action="/tasks" accept-charset="UTF-8">
                 <div class="row row-cols-auto g-2">

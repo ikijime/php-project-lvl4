@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use App\Models\Label;
 use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
@@ -17,7 +18,7 @@ class TaskTest extends TestCase
     private User $user1;
     private User $user2;
     private TaskStatus $status1;
-    
+
     public function setUp(): void
     {
         parent::setUp();
@@ -27,6 +28,7 @@ class TaskTest extends TestCase
         $this->user2 = User::factory()->create(['name' => 'SecondUser']);
         Auth::login($this->user1);
         $this->task1 = Task::factory()->create(['author_id' => $this->user1->id]);
+        $this->label1 = Label::factory()->create(['name' => 'FirstLabel', 'description' => 'FirstLabelDesc']);
     }
 
     /** @test */
@@ -57,17 +59,18 @@ class TaskTest extends TestCase
         $this->followingRedirects();
         $newData = ['name' => 'New name', 'description' => 'New description'];
         $response = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response->assertSee("The status id field is required.");
+        $response->assertSee("Это обязательное поле");
 
         $this->followingRedirects();
         $newData['status_id'] = $this->status1->id;
         $newData['assigned_to_id'] = $this->user2->id;
         $response2 = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response2->assertSee('Updated successfully');
+        $response2->assertSee('Задача успешно изменена');
 
-        $newData['labels'] = [1,2];
+        $this->followingRedirects();
+        $newData['labels'] = [$this->label1->id];
         $response3 = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response3->assertSee('Updated successfully');
+        $response3->assertSee('Задача успешно изменена');
     }
 
     /** @test */
@@ -76,6 +79,6 @@ class TaskTest extends TestCase
         $this->followingRedirects();
         $taskid = $this->task1->id;
         $response = $this->delete("/tasks/{$taskid}");
-        $response->assertSee("Task {$this->task1->name} has been deleted");
+        $response->assertSee("Задача успешно удалена");
     }
 }

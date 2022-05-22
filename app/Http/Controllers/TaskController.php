@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Task;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Spatie\QueryBuilder\QueryBuilder;
@@ -50,14 +51,15 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        request()->validate([
+        $task = new Task();
+
+        $this->validate($request, [
             'name' => 'required|unique:tasks',
             'description' => 'required',
             'status_id' => "required"
         ]);
 
-        $newTask = new Task();
-        $newTask->fill([
+        $task->fill([
             'author_id' => Auth::id(),
             'name' => request('name'),
             'status_id' => request('status_id'),
@@ -65,12 +67,12 @@ class TaskController extends Controller
             'assigned_to_id' => request('assigned_to_id')
         ]);
 
-        if ($newTask->save()) {
-            $newTask->labels()->attach(request('labels'));
-            flash('Task has been published', 'success');
+        if ($task->save()) {
+            $task->labels()->attach(request('labels'));
+            flash(__('flash.success.f.create', ['entity' => 'задача']), 'success');
             return redirect('/tasks');
         } else {
-            flash('Something went wrong while creating task');
+            flash(__('flash.error.create', ['entity' => 'задача']));
             return redirect('/tasks');
         }
     }
@@ -103,7 +105,7 @@ class TaskController extends Controller
             $labels = $task->labels()->get();
             return view('tasks.edit', compact('task', 'labels'));
         } else {
-            flash('You must be owner of this task to edit.', 'warning');
+            flash(__('You must be owner of this task to edit.'), 'warning');
             return redirect()->back();
         }
     }
@@ -115,12 +117,14 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate([
             'name' => 'required',
             'description' => 'required',
-            'status_id' => "required"
+            'status_id' => "required",
+            'assigned_to_id' => 'nullable',
+            'labels' => 'array',
         ]);
 
         $task = Task::findOrFail($id);
@@ -139,7 +143,8 @@ class TaskController extends Controller
         }
 
         $task->update();
-        flash('Updated successfully', 'success');
+
+        flash(__('flash.success.f.change', ['entity' => 'задача']), 'success');
         return redirect()->route('tasks.index');
     }
 
@@ -153,7 +158,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
         $task->Delete();
-        flash("Task {$task->name} has been deleted", 'danger');
+        flash(__('flash.success.f.delete', ['entity' => 'задача']), 'danger');
         return redirect()->route('tasks.index');
     }
 }

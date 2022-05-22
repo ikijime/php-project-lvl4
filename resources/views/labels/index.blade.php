@@ -3,12 +3,11 @@
 @section('content')
 <main class="container py-2">
     <h1 class="mb-4">{{__("Tags")}}</h1>
-
     @if (Auth::User())
     <a href="/labels/create" class="btn btn-primary ml-auto">{{__("Create tag")}}</a>
     @endif
 
-    <table class="table table-striped">
+    <table class="table table-striped mt-2">
         <thead>
             <tr>
                 <th class="text-center">ID</th>

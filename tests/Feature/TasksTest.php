@@ -6,7 +6,6 @@ use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -31,14 +30,14 @@ class TasksTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_browse_tasks()
+    public function aUserCanBrowseTasks()
     {
         $response = $this->get('/tasks');
         $response->assertStatus(200);
     }
 
     /** @test */
-    public function an_unauthorized_user_cant_create_task()
+    public function anUnauthorizedUserCantCreateTask()
     {
         $this->followingRedirects();
 
@@ -48,7 +47,7 @@ class TasksTest extends TestCase
     }
 
     /** @test */
-    public function an_authorized_user_can_create_task()
+    public function anAuthorizedUserCanCreateTask()
     {
         $user = User::factory()->create();
 
@@ -58,17 +57,17 @@ class TasksTest extends TestCase
         $response = $this->post('/tasks', $this->task->toArray());
         $response->assertOk();
         $response->assertSee($this->task->name);
-        $response->assertSee('Task has been published');
+        $response->assertSee('Задача успешно создана');
 
         $this->followingRedirects();
         $response = $this->post('/tasks', $this->task->toArray());
         $response->assertOk();
         $response->assertSee($this->task->name);
-        $response->assertSee('The name has already been taken.');
+        $response->assertSee(' с таким именем уже существует');
     }
 
     /** @test */
-    public function a_user_can_browse_single_task()
+    public function aUserCanBrowseSingleTask()
     {
         $task = Task::factory()->create();
         $response = $this->get("/tasks/{$task->id}");
@@ -77,7 +76,7 @@ class TasksTest extends TestCase
     }
 
     /** @test */
-    public function a_user_can_filter_by_author()
+    public function aUserCanFilterByAuthor()
     {
         $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=+' . $this->user1->id . '+&filter[assigned_to_id]=');
         $response->assertSee('<td>FirstUser</td>', $escaped = false);
@@ -86,16 +85,16 @@ class TasksTest extends TestCase
 
 
     /** @test */
-    public function a_user_can_filter_by_executor_and_status()
+    public function aUserCanFilterByExecutorAndStatus()
     {
         Task::factory(2)->create(['assigned_to_id' => $this->user1->id, 'status_id' =>  $this->status1->id]);
         Task::factory(2)->create(['assigned_to_id' => $this->user2->id, 'status_id' => $this->status2->id]);
 
         $response = $this->get('/tasks?filter[status_id]=&filter[author_id]=&filter[assigned_to_id]=+' . $this->user1->id . '+');
 
-        $response->assertSee("<td>{$this->status1->name}</td>", $escaped = false);
-        $response->assertSee('<td>FirstUser</td>', $escaped = false);
-        $response->assertDontSee("<td>{$this->status2->name}</td>", $escaped = false);
-        $response->assertDontSee('<td>SecondUser</td>', $escaped = false);
+        $response->assertSee("<td>{$this->status1->name}</td>", false);
+        $response->assertSee('<td>FirstUser</td>', false);
+        $response->assertDontSee("<td>{$this->status2->name}</td>", false);
+        $response->assertDontSee('<td>SecondUser</td>', false);
     }
 }

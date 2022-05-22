@@ -6,31 +6,32 @@ use Tests\TestCase;
 use App\Models\User;
 use App\Models\TaskStatus;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
+use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class StatusesTest extends TestCase
 {
-    /** @test */
-    use DatabaseMigrations;
-
-    public function a_user_can_browse_statuses()
+    use RefreshDatabase;
+    
+    public function setUp(): void
     {
-        $response = $this->get('/task_statuses');
-        $response->assertStatus(200);
+        parent::setUp();
+
+        $this->user = User::factory()->create();
+        $this->status = TaskStatus::factory()->make(['name' => 'UniqueName']);
     }
 
     /** @test */
-    public function an_authorized_user_can_create_status()
+    public function aUserCanBrowseStatuses()
     {
-        $user = User::factory()->create();
+        $this->get('/task_statuses')->assertStatus(200);
+    }
 
-        $status = TaskStatus::factory()->create();
-
-        $this->followingRedirects();
-
-        Auth::login($user);
-
-        $response = $this->post('/task_statuses', $status->toArray());
-        $response->assertSee($status->name);
+    /** @test */
+    public function anAuthorizedUserCanCreateStatus()
+    {
+        Auth::login($this->user);
+        $this->followingRedirects()
+        ->post('/task_statuses', $this->status->toArray())
+        ->assertSee($this->status->name);
     }
 }

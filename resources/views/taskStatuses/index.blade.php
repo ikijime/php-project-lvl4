@@ -3,7 +3,6 @@
 @section('content')
 <main class="container py-2">
     <h1 class="mb-4">{{ __("Task statuses") }}</h1>
-
     @if (Auth::User())
     <a href="/task_statuses/create" class="btn btn-primary ml-auto">{{ __("Create status") }}</a>
     @endif
@@ -28,18 +27,24 @@
                 @if (Auth::id())
                 <td class="text-center">
                     <div class="btn-group">
-                        <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">{{ __("Change") }}</a>
                         @if( !$usedStatusIds->contains($taskStatus->id) )
-                        <form action="/task_statuses/{{ $taskStatus->id }}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-message="{{ __('messages.taskDelete', ['name' => $taskStatus->name]) }}" data-id="{{ $taskStatus->id }}" class="btn btn-link text-danger pt-0">{{ __("Delete") }}
-                            </button>
-                        </form>
+                            <a 
+                                data-method="delete" 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#deleteModal" 
+                                data-message="{{ __('messages.taskDelete', ['name' => $taskStatus->name]) }}" 
+                                data-id="{{ $taskStatus->id }}" 
+                                class="text-danger pt-0 me-2" 
+                                href="{{ route('task_statuses.destroy', $taskStatus)}}">{{ __("Delete") }}
+                            </a>
                         @else
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#cannotDeleteModal" class="btn btn-link text-muted pt-0">{{ __("Delete") }}
-                        </button>
+                            <a 
+                                data-bs-toggle="modal" 
+                                data-bs-target="#cannotDeleteModal" 
+                                class="text-muted pt-0 me-2">{{ __("Delete") }}
+                            </a>
                         @endif
+                        <a class="text-black" href="/task_statuses/{{ $taskStatus->id }}/edit">{{ __("Change") }}</a>
                     </div>
                 </td>
                 @endif

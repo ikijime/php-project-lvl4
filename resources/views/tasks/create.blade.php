@@ -2,30 +2,44 @@
 
 @section('content')
 <main class="container">
-
-    <h1 class="mb-5">{{__("Create task")}}</h1>
-
+    <h1 class="mb-4">{{__("Create task")}}</h1>
     <form method="POST" action="{{ route('tasks.store') }}" accept-charset="UTF-8" class="w-50">
         @csrf
+        
         <div class="form-group">
             <label for="name">{{ __("Name") }}</label>
-            <input class="form-control" name="name" type="text" id="name">
+            <input type="text" class="form-control @error('name') is-invalid @enderror" value="{{ old('name') }}" name="name" id="name">
+            @error('name')
+            <div class="invalid-feedback d-block" role="alert">
+                <strong>{{ __($message, ['entity' => 'задача']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="description">{{ __("Description") }}</label>
-            <textarea class="form-control" name="description" cols="50" rows="10" id="description"></textarea>
+            <textarea class="form-control @error('description') is-invalid @enderror" value="{{ old('name') }}" name="description" cols="50" rows="10" id="description"></textarea>
+            @error('description')
+            <div class="invalid-feedback d-block" role="alert">
+                <strong>{{ __($message, ['entity' => 'задача']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="status_id">{{ __("Status") }}</label>
-            <select class="form-control" id="status_id" name="status_id">
+            <select class="form-control @error('description') is-invalid @enderror" id="status_id" name="status_id">
                 @foreach (App\Models\TaskStatus::all() as $status)
                 <option value="{{ $status->id }}" {{ old('status_id') == $status->id ? 'selected' : '' }}>
                     {{ $status->name }}
                 </option>
                 @endforeach
             </select>
+            @error('status_id')
+            <div class="invalid-feedback d-block" role="alert">
+                <strong>{{ __($message, ['entity' => 'задача']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -50,6 +64,5 @@
 
         <input class="btn btn-primary" type="submit" value="{{ __("Create") }}" />
     </form>
-
 </main>
 @endsection

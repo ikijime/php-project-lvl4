@@ -51,10 +51,10 @@ class LabelController extends Controller
         $label->description = $request->description;
 
         if ($label->save()) {
-            flash('New label created', 'success');
+            flash(__('flash.success.f.create', ['entity' => 'метка']), 'success');
             return redirect('/labels');
         } else {
-            flash('Something went wrong while creating label');
+            flash(__('Something went wrong while creating label'));
             return redirect('/labels');
         }
     }
@@ -104,7 +104,7 @@ class LabelController extends Controller
         ]);
 
         $label->update();
-        flash('Updated successfully', 'success');
+        flash(__('flash.success.f.change', ['entity' => 'метка']), 'success');
         return redirect()->route('labels.index');
     }
 
@@ -118,7 +118,7 @@ class LabelController extends Controller
     {
         $label = Label::findOrFail($id);
         $label->Delete();
-        flash("Label {$label->name} has been deleted", 'danger');
+        flash(__('flash.success.f.delete', ['entity' => 'метка']), 'danger');
         return redirect()->route('labels.index');
     }
 }

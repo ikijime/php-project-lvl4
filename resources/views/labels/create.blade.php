@@ -10,7 +10,12 @@
 
         <div class="form-group">
             <label for="name">{{ __("Name") }}</label>
-            <input class="form-control" name="name" type="text" id="name">
+            <input class="form-control  @error('name') is-invalid @enderror" name="name" type="text" id="name">
+            @error('name')
+            <div class="invalid-feedback d-block" role="alert" >
+                <strong>{{ __($message, ['entity' => 'метка']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">

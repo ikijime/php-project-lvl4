@@ -10,19 +10,17 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LabelsTest extends TestCase
 {
-    /** @test */
     use DatabaseMigrations;
 
     /** @test */
-    use DatabaseMigrations;
-
-    public function a_user_can_browse_labels()
+    public function aUserCanBrowseLabels()
     {
         $response = $this->get('/labels');
         $response->assertStatus(200);
     }
 
-    public function an_unauthorized_user_cant_create_label()
+    /** @test */
+    public function anUnauthorizedUserCantCreateLabel()
     {
         $label = Label::factory()->make();
 
@@ -34,7 +32,7 @@ class LabelsTest extends TestCase
     }
 
     /** @test */
-    public function an_authorized_user_can_create_label()
+    public function anAuthorizedUserCanCreateLabel()
     {
         $user = User::factory()->create();
         $label = Label::factory()->make();
@@ -45,6 +43,6 @@ class LabelsTest extends TestCase
 
         $response = $this->post('/labels', $label->toArray());
         $response->assertOk();
-        $response->assertSee('New label created');
+        $response->assertSee('Метка успешно создана');
     }
 }

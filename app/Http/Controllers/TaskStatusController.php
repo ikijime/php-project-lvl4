@@ -5,8 +5,6 @@ namespace App\Http\Controllers;
 use App\Models\Task;
 use App\Models\TaskStatus;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-use Spatie\QueryBuilder\QueryBuilder;
 
 class TaskStatusController extends Controller
 {
@@ -47,7 +45,13 @@ class TaskStatusController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'name' => 'required|max:255|unique:task_statuses',
+        ]);
+
         TaskStatus::create($request->only(['name']));
+
+        flash(__('flash.success.m.create', ['entity' => 'статус']), 'success');
         return redirect('task_statuses');
     }
 
@@ -90,7 +94,7 @@ class TaskStatusController extends Controller
         $task = TaskStatus::findOrFail($id);
         $task->update(['name' => request('name')]);
 
-        flash('Updated successfully', 'success');
+        flash(__('flash.success.m.change', ['entity' => 'статус']), 'success');
         return redirect()->route('task_statuses.index');
     }
 
@@ -104,7 +108,7 @@ class TaskStatusController extends Controller
     {
         $status = TaskStatus::findOrFail($id);
         $status->Delete();
-        flash("Status {$status->name} has been deleted", 'danger');
+        flash(__('flash.success.m.change', ['entity' => 'статус']), 'danger');
         return redirect()->route('task_statuses.index');
     }
 }
