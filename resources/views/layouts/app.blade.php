@@ -22,15 +22,14 @@
 </head>
 
 <body style="background-color: #f5f5f5">
-    <div id="app" class="container-lg" >
+    <div id="app" class="container-lg">
         <div class="row">
             <nav class="navbar navbar-expand-md shadow-sm">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="{{ url('/') }}">
                         {{ config('app.name', 'Task manager') }}
                     </a>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                        <span class="navbar-toggler-icon"></span>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"> <span class="navbar-toggler-icon"></span>
                     </button>
 
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
@@ -102,8 +101,8 @@
         </div>
         <div class="row">
             <footer>
-                <div class="container fixed-bottom style="padding-left: 0px; padding-right: 0px;">
-                        @yield('breadcrumbs')
+                <div class="container fixed-bottom style=" padding-left: 0px; padding-right: 0px;">
+                    @yield('breadcrumbs')
                 </div>
             </footer>
         </div>

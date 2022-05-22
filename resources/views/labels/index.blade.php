@@ -21,32 +21,32 @@
             </tr>
         </thead>
         <tbody>
-        @foreach($labels as $label)
-        <tr>
-            <td class="text-center">{{ $label->id }}</td>
-            <td>{{ $label->name }}</td>
-            <td>{{ $label->description }}</td>
-            <td>{{ $label->created_at }}</td>
-            @if (Auth::id())
-            <td class="text-center">
-                <div class="btn-group">
-                    <a class="text-black" href="/labels/{{ $label->id }}/edit">{{__("Change")}}</a>
+            @foreach($labels as $label)
+            <tr>
+                <td class="text-center">{{ $label->id }}</td>
+                <td>{{ $label->name }}</td>
+                <td>{{ $label->description }}</td>
+                <td>{{ $label->created_at }}</td>
+                @if (Auth::id())
+                <td class="text-center">
+                    <div class="btn-group">
+                        <a class="text-black" href="/labels/{{ $label->id }}/edit">{{__("Change")}}</a>
 
-                    <form action="/labels/{{ $label->id }}" method="POST">
-                        @method('delete')
-                        @csrf
-                        <button type="submit" class="btn btn-link text-danger pt-0">{{__("Delete")}}</button>
-                    </form>
-                </div>
-            </td>
-            @endif
-        </tr>
-        @endforeach
+                        <form action="/labels/{{ $label->id }}" method="POST">
+                            @method('delete')
+                            @csrf
+                            <button type="submit" class="btn btn-link text-danger pt-0">{{__("Delete")}}</button>
+                        </form>
+                    </div>
+                </td>
+                @endif
+            </tr>
+            @endforeach
         </tbody>
     </table>
 </main>
 @endsection
 
 @section('breadcrumbs')
-    {{ Breadcrumbs::render('labels.index') }}
+{{ Breadcrumbs::render('labels.index') }}
 @endsection

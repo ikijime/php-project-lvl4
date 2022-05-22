@@ -7,7 +7,7 @@ use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class Task extends Authenticatable implements MustVerifyEmail
+class Task extends Authenticatable
 {
     use HasFactory;
     use Notifiable;
