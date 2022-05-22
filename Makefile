@@ -36,3 +36,6 @@ lint:
 
 lint-fix:
 	composer run phpcbf app
+
+ammend:
+	git commit --amend --no-edit

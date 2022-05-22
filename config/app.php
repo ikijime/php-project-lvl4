@@ -188,7 +188,7 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        Rollbar\Laravel\RollbarServiceProvider::class
+        //Rollbar\Laravel\RollbarServiceProvider::class
     ],
 
     /*

@@ -30,7 +30,7 @@ Route::get('/language/{locale}', function ($locale) {
     return redirect()->back();
 })->name('language');
 
-Auth::routes();
+Auth::routes(['verify' => true]);
 //->middleware('verified') Temporaly disabled
 
 Route::resource('tasks', TaskController::class);
