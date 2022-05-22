@@ -80,7 +80,7 @@
                                 </div>
                             </li>
                             @endguest
-                            @include('components/language-switcher')
+                            <!-- @include('components/language-switcher') -->
                         </ul>
                     </div>
                 </div>
