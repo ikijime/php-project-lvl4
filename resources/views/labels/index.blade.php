@@ -28,15 +28,14 @@
                 <td>{{ $label->created_at }}</td>
                 @if (Auth::id())
                 <td class="text-center">
-                    <div class="btn-group">
-                        <a class="text-black" href="/labels/{{ $label->id }}/edit">{{__("Change")}}</a>
-
-                        <form action="/labels/{{ $label->id }}" method="POST">
-                            @method('delete')
-                            @csrf
-                            <button type="submit" class="btn btn-link text-danger pt-0">{{__("Delete")}}</button>
-                        </form>
-                    </div>
+                    <a  href="{{ route('labels.destroy', $label->id )}}"
+                        data-method="delete"
+                        rel="nofollow"
+                        data-confirm="Вы уверены?"
+                        class="text-danger pt-0 me-2" 
+                        ">{{ __("Delete") }}
+                    </a>
+                    <a class="text-black" href="{{ route('labels.edit', $label->id) }}">{{ __("Change") }}</a>
                 </td>
                 @endif
             </tr>

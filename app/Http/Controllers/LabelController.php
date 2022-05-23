@@ -91,7 +91,7 @@ class LabelController extends Controller
      */
     public function update(Request $request, $id)
     {
-        request()->validate([
+        $this->validate($request, [
             'name' => 'required',
             'description' => 'required'
         ]);

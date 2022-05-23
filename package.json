@@ -25,6 +25,7 @@
         "node": "16.x"
     },
     "dependencies": {
+        "@rails/ujs": "^6.0.5",
         "prod": "^1.0.1"
     }
 }

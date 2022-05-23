@@ -107,8 +107,14 @@ class TaskStatusController extends Controller
     public function destroy($id)
     {
         $status = TaskStatus::findOrFail($id);
-        $status->Delete();
-        flash(__('flash.success.m.change', ['entity' => 'статус']), 'danger');
+
+        if ($status) {
+            $status->Delete();
+            flash(__('flash.success.m.delete', ['entity' => 'статус']), 'danger');
+        } else {
+            flash(__('flash.error.m.delete', ['entity' => 'задача']));
+        }
+
         return redirect()->route('task_statuses.index');
     }
 }

@@ -80,11 +80,16 @@
                 <div class="btn-group">
                     @if (Auth::id())
                     <td class="text-center">
-                        <a class="text-black" href="/tasks/{{ $task->id }}/edit">{{ __("Change") }}</a>
                         @if ((int) Auth::id() === (int) $task->author_id || Auth::user() && Auth::user()->isAdmin() )
-                        <button type="button" data-bs-toggle="modal" data-bs-target="#deleteModal" data-message="{{ __('messages.taskDelete', ['name' => $task->name]) }}" data-id="{{ $task->id }}" class="btn btn-link text-danger">{{ __("Delete") }}
-                        </button>
+                        <a  href="{{ route('tasks.destroy', $task->id )}}"
+                            data-method="delete"
+                            rel="nofollow"
+                            data-confirm="Вы уверены?"
+                            class="text-danger pt-0 me-2" 
+                            ">{{ __("Delete") }}
+                        </a>
                         @endif
+                        <a class="text-black" href="{{ route('tasks.edit', $task->id) }}">{{ __("Change") }}</a>
                     </td>
                     @endif
                 </div>

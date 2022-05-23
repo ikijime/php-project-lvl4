@@ -3,7 +3,7 @@
 @section('content')
 <main class="container">
 
-    <h1 class="mb-5">Изменить задачу</h1>
+    <h1 class="mb-2">Изменить задачу</h1>
 
     <form method="POST" action=" {{ route('tasks.update', $task) }} " accept-charset="UTF-8" class="w-50">
         @method('PATCH')
@@ -15,6 +15,11 @@
         <div class="form-group">
             <label for="description">{{ __("Description") }}</label>
             <textarea class="form-control" name="description" cols="50" rows="10" id="description">{{ $task->description }}</textarea>
+            @error('description')
+            <div class="invalid-feedback d-block" role="alert" >
+                <strong>{{ __($message, ['entity' => 'описание']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">
@@ -47,7 +52,7 @@
             </select>
         </div>
 
-        <input class="btn btn-primary" type="submit" value="{{ __("Change") }}">
+        <input class="btn btn-primary" type="submit" value="{{ __("Update") }}">
     </form>
 
 </main>

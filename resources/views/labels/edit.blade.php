@@ -10,16 +10,26 @@
         @csrf
 
         <div class="form-group">
-            <label for="name">Имя</label>
-            <input class="form-control" name="name" type="text" id="name" value="{{ $label->name }}">
+            <label for="name">{{ __("Name") }}</label>
+            <input class="form-control  @error('name') is-invalid @enderror" value="{{ $label->name }}" name="name" type="text" id="name">
+            @error('name')
+            <div class="invalid-feedback d-block" role="alert" >
+                <strong>{{ __($message, ['entity' => 'метка']) }}</strong>
+            </div>
+            @enderror
         </div>
 
         <div class="form-group">
             <label for="description">Описание</label>
             <textarea class="form-control" name="description" cols="50" rows="10" id="description">{{ $label->description }}</textarea>
+            @error('description')
+            <div class="invalid-feedback d-block" role="alert" >
+                <strong>{{ __($message, ['entity' => 'метка']) }}</strong>
+            </div>
+            @enderror
         </div>
 
-        <input class="btn btn-primary" type="submit" value="Изменить">
+        <input class="btn btn-primary mt-2" type="submit" value="{{ __("Update") }}">
 
     </form>
 
