@@ -34,21 +34,21 @@ class TaskStatusTest extends TestCase
     }
 
     /** @test */
-    public function create_task_status(): void
+    public function createTaskStatus(): void
     {
         $response = $this->get('/task_statuses/create');
         $response->assertOk();
     }
 
     /** @test */
-    public function show_task_status(): void
+    public function showTaskStatus(): void
     {
         $response = $this->get("/task_statuses/{$this->status1->id}");
         $response->assertRedirect();
     }
 
     /** @test */
-    public function edit_task_status(): void
+    public function editTaskStatus(): void
     {
         $response = $this->get("/task_statuses/{$this->status1->id}/edit");
         $response->assertOk();
@@ -56,7 +56,7 @@ class TaskStatusTest extends TestCase
     }
 
     /** @test */
-    public function delete_task_status(): void
+    public function deleteTaskStatus(): void
     {
         $this->delete("/task_statuses/{$this->status1->id}");
         $this->assertDatabaseMissing('task_statuses', ['name' => 'FirstStatus']);

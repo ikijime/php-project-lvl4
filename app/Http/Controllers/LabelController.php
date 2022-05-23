@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Task;
 use App\Models\Label;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class LabelController extends Controller
@@ -18,7 +19,7 @@ class LabelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $labels = Label::all();
         return view('labels.index', compact('labels'));
@@ -29,7 +30,7 @@ class LabelController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         return view('labels.create');
     }
@@ -40,7 +41,7 @@ class LabelController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         request()->validate([
             'name' => 'required|unique:labels'
@@ -65,7 +66,7 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): RedirectResponse
     {
         return redirect('labels');
     }
@@ -76,7 +77,7 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $label = Label::findOrFail($id);
         return view('labels.edit', compact('label'));
@@ -89,7 +90,7 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required',
@@ -114,7 +115,7 @@ class LabelController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $label = Label::findOrFail($id);
         $label->Delete();

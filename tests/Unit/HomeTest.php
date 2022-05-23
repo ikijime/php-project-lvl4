@@ -11,7 +11,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class HomeTest extends TestCase
 {
     /** @test */
-    public function show_label(): void
+    public function showLabel(): void
     {
         $response = $this->get("/");
         $response->assertOk();

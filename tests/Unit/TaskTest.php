@@ -13,8 +13,8 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 class TaskTest extends TestCase
 {
     use DatabaseMigrations;
+
     private Task $task1;
-    private $tasks;
     private User $user1;
     private User $user2;
     private TaskStatus $status1;
@@ -32,7 +32,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function create_task(): void
+    public function createTask(): void
     {
         $response = $this->get('/tasks/create');
         $response->assertOk();
@@ -41,7 +41,7 @@ class TaskTest extends TestCase
 
 
     /** @test */
-    public function edit_task(): void
+    public function editTask(): void
     {
         $taskid = $this->task1->id;
         $response = $this->get("/tasks/{$taskid}/edit");
@@ -54,7 +54,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function update_task(): void
+    public function updateTask(): void
     {
         $this->followingRedirects();
         $newData = ['name' => 'New name', 'description' => 'New description'];
@@ -74,7 +74,7 @@ class TaskTest extends TestCase
     }
 
     /** @test */
-    public function delete_task(): void
+    public function deleteTask(): void
     {
         $this->followingRedirects();
         $taskid = $this->task1->id;

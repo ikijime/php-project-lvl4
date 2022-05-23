@@ -24,14 +24,14 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function create_label(): void
+    public function createLabel(): void
     {
         $response = $this->get('/labels/create');
         $response->assertOk();
     }
 
     /** @test */
-    public function create_not_authorized_label(): void
+    public function createNotAuthorizedLabel(): void
     {
         Auth::logout();
         $this->followingRedirects();
@@ -40,14 +40,14 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function edit_label(): void
+    public function editLabel(): void
     {
         $response = $this->get("/labels/{$this->label1->id}/edit");
         $response->assertOk();
     }
 
     /** @test */
-    public function update_label(): void
+    public function updateLabel(): void
     {
         $this->followingRedirects();
         $label = $this->label1->toArray();
@@ -58,14 +58,14 @@ class LabelTest extends TestCase
     }
 
     /** @test */
-    public function show_label(): void
+    public function showLabel(): void
     {
         $response = $this->get("/labels/{$this->label1->id}");
         $response->assertRedirect();
     }
 
     /** @test */
-    public function delete_label(): void
+    public function deleteLabel(): void
     {
         $this->delete("/labels/{$this->label1->id}");
         $this->assertDatabaseMissing('labels', ['name' => 'label1']);

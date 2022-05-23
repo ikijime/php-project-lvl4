@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Task;
 use App\Models\TaskStatus;
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 
 class TaskStatusController extends Controller
@@ -18,7 +20,7 @@ class TaskStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(): View
     {
         $taskStatuses = TaskStatus::all();
 
@@ -32,7 +34,7 @@ class TaskStatusController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(): View
     {
         return view('taskStatuses.create');
     }
@@ -43,7 +45,7 @@ class TaskStatusController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request): RedirectResponse
     {
         $this->validate($request, [
             'name' => 'required|max:255|unique:task_statuses',
@@ -61,7 +63,7 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id): RedirectResponse
     {
         return redirect()->route('task_statuses.index');
     }
@@ -72,7 +74,7 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id): View
     {
         $status = TaskStatus::FindOrFail($id);
         return view('taskStatuses.edit', compact('status'));
@@ -85,7 +87,7 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $id): RedirectResponse
     {
         request()->validate([
             'name' => 'required'
@@ -104,7 +106,7 @@ class TaskStatusController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($id): RedirectResponse
     {
         $status = TaskStatus::findOrFail($id);
 
