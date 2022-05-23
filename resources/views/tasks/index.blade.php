@@ -76,7 +76,7 @@
                 </td>
                 <td>{{ $task->creator->name }}</td>
                 <td>{{ $task->executor->name }}</td>
-                <td>{{ $task->created_at }}</td>
+                <td>{{ $task->created_at->format('d.m.Y') }}</td>
                 <div class="btn-group">
                     @if (Auth::id())
                     <td class="text-center">
