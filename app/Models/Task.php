@@ -14,7 +14,7 @@ class Task extends Authenticatable
     protected $guarded = [];
     protected $fillable = [
         'name',
-        'author_id',
+        'created_by_id',
         'description',
         'status_id',
         'assigned_to_id'
@@ -22,7 +22,7 @@ class Task extends Authenticatable
 
     public function creator()
     {
-        return $this->belongsTo('App\Models\User', 'author_id', 'id');
+        return $this->belongsTo('App\Models\User', 'created_by_id', 'id');
     }
 
     public function status()

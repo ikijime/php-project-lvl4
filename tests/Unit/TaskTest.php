@@ -27,7 +27,7 @@ class TaskTest extends TestCase
         $this->user1 = User::factory()->create(['name' => 'FirstUser']);
         $this->user2 = User::factory()->create(['name' => 'SecondUser']);
         Auth::login($this->user1);
-        $this->task1 = Task::factory()->create(['author_id' => $this->user1->id]);
+        $this->task1 = Task::factory()->create(['created_by_id' => $this->user1->id]);
         $this->label1 = Label::factory()->create(['name' => 'FirstLabel', 'description' => 'FirstLabelDesc']);
     }
 

@@ -25,7 +25,7 @@ class TaskController extends Controller
         $tasks = QueryBuilder::for(Task::with('creator', 'executor', 'status'))
         ->allowedFilters([
             AllowedFilter::exact('status_id'),
-            AllowedFilter::exact('author_id'),
+            AllowedFilter::exact('created_by_id'),
             AllowedFilter::exact('assigned_to_id')
         ])
         ->get();
@@ -60,7 +60,7 @@ class TaskController extends Controller
         ]);
 
         $task->fill([
-            'author_id' => Auth::id(),
+            'created_by_id' => Auth::id(),
             'name' => request('name'),
             'status_id' => request('status_id'),
             'description' => request('description'),
@@ -100,7 +100,7 @@ class TaskController extends Controller
     {
         $task = Task::findOrFail($id);
 
-        if (Auth::id() === (int) $task->author_id) {
+        if (Auth::id() === (int) $task->created_by_id) {
             flash('Edit', 'info');
             $labels = $task->labels()->get();
             return view('tasks.edit', compact('task', 'labels'));

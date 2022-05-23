@@ -19,10 +19,10 @@
                         </select>
                     </div>
                     <div class="col">
-                        <select class="form-select me-2" name="filter[author_id] ">
+                        <select class="form-select me-2" name="filter[created_by_id]">
                             <option value="">{{ __("Author") }}</option>
                             @foreach (\App\Models\User::all() as $user)
-                            <option value="{{ $user->id }}" @if(isset($filterInput['author_id']) && $filterInput['author_id']==$user->id) selected @endif>
+                            <option value="{{ $user->id }}" @if(isset($filterInput['created_by_id']) && $filterInput['created_by_id']==$user->id) selected @endif>
                                 {{ $user->name }}
                             </option>
                             @endforeach
@@ -80,7 +80,7 @@
                 <div class="btn-group">
                     @if (Auth::id())
                     <td class="text-center">
-                        @if ((int) Auth::id() === (int) $task->author_id || Auth::user() && Auth::user()->isAdmin() )
+                        @if ((int) Auth::id() === (int) $task->created_by_id || Auth::user() && Auth::user()->isAdmin() )
                         <a  href="{{ route('tasks.destroy', $task->id )}}"
                             data-method="delete"
                             rel="nofollow"

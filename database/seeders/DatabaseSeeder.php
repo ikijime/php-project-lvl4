@@ -32,7 +32,7 @@ class DatabaseSeeder extends Seeder
             for ($i = 0; $i < 2; $i++) {
                 $taskData[] = [
                     'name' => $faker->unique()->word(),
-                    'author_id' =>  $user->id,
+                    'created_by_id' =>  $user->id,
                     'assigned_to_id' => User::inRandomOrder()->get('id')->first()->id,
                     'status_id' => rand(1, 4),
                     'description' => Str::random(20),
