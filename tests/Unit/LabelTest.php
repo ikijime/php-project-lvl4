@@ -5,35 +5,35 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use App\Models\User;
 use App\Models\Label;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Arr;
 use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class LabelTest extends TestCase
 {
     use DatabaseMigrations;
 
+    private mixed $user1;
+    private mixed $label1;
+
     public function setUp(): void
     {
         parent::setUp();
 
         $this->user1 = User::factory()->create(['name' => 'FirstUser']);
-        $this->user2 = User::factory()->create(['name' => 'SecondUser']);
         $this->label1 = Label::factory()->create(['name' => 'label1']);
-        $this->label2 = Label::factory()->create(['name' => 'label2']);
-        Auth::login($this->user1);
     }
 
     /** @test */
     public function createLabel(): void
     {
-        $response = $this->get('/labels/create');
-        $response->assertOk();
+        $this->actingAs($this->user1)
+            ->get('/labels/create')
+            ->assertOk();
     }
 
     /** @test */
     public function createNotAuthorizedLabel(): void
     {
-        Auth::logout();
         $this->followingRedirects();
         $response = $this->get('/labels/create');
         $response->assertSee('Для просмотра необходима аутентификация.');
@@ -42,19 +42,21 @@ class LabelTest extends TestCase
     /** @test */
     public function editLabel(): void
     {
-        $response = $this->get("/labels/{$this->label1->id}/edit");
-        $response->assertOk();
+        $this->actingAs($this->user1)
+            ->get("/labels/{$this->label1->id}/edit")
+            ->assertOk();
     }
 
     /** @test */
     public function updateLabel(): void
     {
-        $this->followingRedirects();
-        $label = $this->label1->toArray();
+        $label = Arr::only($this->label1->toArray(), ['name', 'description']);
         $label['name'] = 'UpdatedName';
-        $response = $this->patch("/labels/{$this->label1->id}", $label);
-        $response->assertOk();
-        $response->assertSee('UpdatedName');
+
+        $this->actingAs($this->user1)
+            ->patch(route('labels.update', $this->label1), $label)
+            ->assertRedirect();
+        $this->assertDatabaseHas('labels', $label);
     }
 
     /** @test */
@@ -67,7 +69,7 @@ class LabelTest extends TestCase
     /** @test */
     public function deleteLabel(): void
     {
-        $this->delete("/labels/{$this->label1->id}");
+        $this->actingAs($this->user1)->delete("/labels/{$this->label1->id}");
         $this->assertDatabaseMissing('labels', ['name' => 'label1']);
     }
 }

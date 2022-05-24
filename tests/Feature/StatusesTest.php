@@ -12,6 +12,9 @@ class StatusesTest extends TestCase
 {
     use RefreshDatabase;
 
+    private mixed $user;
+    private mixed $status;
+
     public function setUp(): void
     {
         parent::setUp();
@@ -21,17 +24,17 @@ class StatusesTest extends TestCase
     }
 
     /** @test */
-    public function aUserCanBrowseStatuses()
+    public function aUserCanBrowseStatuses(): void
     {
-        $this->get('/task_statuses')->assertStatus(200);
+        $this->get(route('task_statuses.index'))->assertStatus(200);
     }
 
     /** @test */
-    public function anAuthorizedUserCanCreateStatus()
+    public function anAuthorizedUserCanCreateStatus(): void
     {
-        Auth::login($this->user);
-        $this->followingRedirects()
-        ->post('/task_statuses', $this->status->toArray())
+        $this->actingAs($this->user)
+        ->followingRedirects()
+        ->post(route('task_statuses.index'), $this->status->toArray())
         ->assertSee($this->status->name);
     }
 }

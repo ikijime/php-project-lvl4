@@ -16,11 +16,7 @@ class TaskController extends Controller
     {
         $this->middleware('auth')->except(['index', 'show']);
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index(): View
     {
         $tasks = QueryBuilder::for(Task::with('creator', 'executor', 'status'))
@@ -34,22 +30,11 @@ class TaskController extends Controller
         return view('tasks.index', compact('tasks'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create(): View
     {
         return view('tasks.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request): RedirectResponse
     {
         $task = new Task();
@@ -78,30 +63,18 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id): RedirectResponse|View
+    public function show(int $id): RedirectResponse|View
     {
         $task = Task::findOrFail($id);
         $labels = $task->labels()->get();
         return view('tasks.show', compact('task', 'labels'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(int $id)
     {
         $task = Task::findOrFail($id);
 
-        if (Auth::id() === (int) $task->created_by_id) {
+        if (Auth::id() === $task->created_by_id) {
             flash('Edit', 'info');
             $labels = $task->labels()->get();
             return view('tasks.edit', compact('task', 'labels'));
@@ -111,14 +84,7 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, int $id): RedirectResponse
     {
         request()->validate([
             'name' => 'required',
@@ -149,16 +115,10 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id): RedirectResponse
+    public function destroy(int $id): RedirectResponse
     {
         $task = Task::findOrFail($id);
-        $task->Delete();
+        $task->delete();
         flash(__('flash.success.f.delete', ['entity' => 'задача']), 'danger');
         return redirect()->route('tasks.index');
     }

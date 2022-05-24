@@ -32,10 +32,10 @@ deploy:
 	git push heroku
 
 lint:
-	composer phpcs
+	composer phpcs app tests
 
 lint-fix:
-	composer run phpcbf app
+	composer run phpcbf app tests
 
 ammend:
 	git commit --amend --no-edit

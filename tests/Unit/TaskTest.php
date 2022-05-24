@@ -14,71 +14,85 @@ class TaskTest extends TestCase
 {
     use DatabaseMigrations;
 
-    private Task $task1;
-    private User $user1;
-    private User $user2;
-    private TaskStatus $status1;
+    private mixed $task1;
+    private mixed $label1;
+    private mixed $status1;
+    private mixed $user1;
+    private mixed $user2;
 
     public function setUp(): void
     {
         parent::setUp();
 
         $this->status1 = TaskStatus::factory()->create(['name' => 'FirstStatus']);
+
         $this->user1 = User::factory()->create(['name' => 'FirstUser']);
         $this->user2 = User::factory()->create(['name' => 'SecondUser']);
-        Auth::login($this->user1);
+
         $this->task1 = Task::factory()->create(['created_by_id' => $this->user1->id]);
         $this->label1 = Label::factory()->create(['name' => 'FirstLabel', 'description' => 'FirstLabelDesc']);
     }
 
     /** @test */
-    public function createTask(): void
+    public function createTaskMustBeAuthenticated(): void
     {
-        $response = $this->get('/tasks/create');
-        $response->assertOk();
-        $response->assertSee('Создать');
+        $this->followingRedirects()
+            ->get('/tasks/create')
+            ->assertOk()
+            ->assertSee('Для просмотра необходима аутентификация');
     }
 
+    /** @test */
+    public function createTask(): void
+    {
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->get('/tasks/create')
+            ->assertOk()
+            ->assertSee('Создать');
+    }
 
     /** @test */
     public function editTask(): void
     {
-        $taskid = $this->task1->id;
-        $response = $this->get("/tasks/{$taskid}/edit");
-        $response->assertOk();
+        $this->actingAs($this->user1)->get(route('tasks.edit', $this->task1->id))
+            ->assertOk();
 
-        Auth::login($this->user2);
-
-        $response = $this->get("/tasks/{$taskid}/edit");
-        $response->assertRedirect();
+        $this->actingAs($this->user2)
+            ->get(route('tasks.edit', $this->task1->id))
+            ->assertRedirect();
     }
 
     /** @test */
     public function updateTask(): void
     {
-        $this->followingRedirects();
         $newData = ['name' => 'New name', 'description' => 'New description'];
-        $response = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response->assertSee("Это обязательное поле");
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->patch(route('tasks.update', $this->task1->id), $newData)
+            ->assertSee("Это обязательное поле");
 
-        $this->followingRedirects();
         $newData['status_id'] = $this->status1->id;
         $newData['assigned_to_id'] = $this->user2->id;
-        $response2 = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response2->assertSee('Задача успешно изменена');
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->patch(route('tasks.update', $this->task1->id), $newData)
+            ->assertSee('Задача успешно изменена');
 
-        $this->followingRedirects();
         $newData['labels'] = [$this->label1->id];
-        $response3 = $this->patch("/tasks/{$this->task1->id}", $newData);
-        $response3->assertSee('Задача успешно изменена');
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->patch(route('tasks.update', $this->task1->id), $newData)
+            ->assertSee('Задача успешно изменена');
     }
 
     /** @test */
     public function deleteTask(): void
     {
-        $this->followingRedirects();
         $taskid = $this->task1->id;
-        $response = $this->delete("/tasks/{$taskid}");
-        $response->assertSee("Задача успешно удалена");
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->delete(route('tasks.destroy', $taskid))
+            ->assertSee("Задача успешно удалена");
     }
 }

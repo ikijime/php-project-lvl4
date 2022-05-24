@@ -6,12 +6,17 @@ use Tests\TestCase;
 use App\Models\Task;
 use App\Models\User;
 use App\Models\TaskStatus;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class TasksTest extends TestCase
 {
     use RefreshDatabase;
+
+    private mixed $task;
+    private mixed $status1;
+    private mixed $status2;
+    private mixed $user1;
+    private mixed $user2;
 
     public function setUp(): void
     {
@@ -32,55 +37,52 @@ class TasksTest extends TestCase
     /** @test */
     public function aUserCanBrowseTasks()
     {
-        $response = $this->get('/tasks');
-        $response->assertStatus(200);
+        $this->get(route('tasks.index'))
+            ->assertStatus(200);
     }
 
     /** @test */
     public function anUnauthorizedUserCantCreateTask()
     {
-        $this->followingRedirects();
-
-        $response = $this->post('/tasks', $this->task->toArray());
-        $response->assertOk();
-        $response->assertSee('Для просмотра необходима аутентификация');
+        $this->followingRedirects()
+            ->post(route('tasks.index'), $this->task->toArray())
+            ->assertOk()
+            ->assertSee('Для просмотра необходима аутентификация');
     }
 
     /** @test */
     public function anAuthorizedUserCanCreateTask()
     {
-        $user = User::factory()->create();
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->post('/tasks', $this->task->toArray())
+            ->assertOk()
+            ->assertSee($this->task->name)
+            ->assertSee('Задача успешно создана');
 
-        Auth::login($user);
-
-        $this->followingRedirects();
-        $response = $this->post('/tasks', $this->task->toArray());
-        $response->assertOk();
-        $response->assertSee($this->task->name);
-        $response->assertSee('Задача успешно создана');
-
-        $this->followingRedirects();
-        $response = $this->post('/tasks', $this->task->toArray());
-        $response->assertOk();
-        $response->assertSee($this->task->name);
-        $response->assertSee(' с таким именем уже существует');
+        $this->actingAs($this->user1)
+            ->followingRedirects()
+            ->post('/tasks', $this->task->toArray())
+            ->assertOk()
+            ->assertSee($this->task->name)
+            ->assertSee('с таким именем уже существует');
     }
 
     /** @test */
     public function aUserCanBrowseSingleTask()
     {
         $task = Task::factory()->create();
-        $response = $this->get("/tasks/{$task->id}");
-        $response->assertOk();
-        $response->assertSee($task->name);
+        $this->get(route('tasks.index', $task->id))
+            ->assertOk()
+            ->assertSee($task['name']);
     }
 
     /** @test */
     public function aUserCanFilterByAuthor()
     {
-        $response = $this->get('/tasks?filter[status_id]=&filter[created_by_id]=+' . $this->user1->id . '+&filter[assigned_to_id]=');
-        $response->assertSee('<td>FirstUser</td>', $escaped = false);
-        $response->assertDontSee('<td>SecondUser</td>', $escaped = false);
+        $this->get('/tasks?filter[status_id]=&filter[created_by_id]=+' . $this->user1->id . '+&filter[assigned_to_id]=')
+            ->assertSee('<td>FirstUser</td>', false)
+            ->assertDontSee('<td>SecondUser</td>', false);
     }
 
 
@@ -90,11 +92,10 @@ class TasksTest extends TestCase
         Task::factory(2)->create(['assigned_to_id' => $this->user1->id, 'status_id' =>  $this->status1->id]);
         Task::factory(2)->create(['assigned_to_id' => $this->user2->id, 'status_id' => $this->status2->id]);
 
-        $response = $this->get('/tasks?filter[status_id]=&filter[created_by_id]=&filter[assigned_to_id]=+' . $this->user1->id . '+');
-
-        $response->assertSee("<td>{$this->status1->name}</td>", false);
-        $response->assertSee('<td>FirstUser</td>', false);
-        $response->assertDontSee("<td>{$this->status2->name}</td>", false);
-        $response->assertDontSee('<td>SecondUser</td>', false);
+        $this->get('/tasks?filter[status_id]=&filter[created_by_id]=&filter[assigned_to_id]=+' . $this->user1->id . '+')
+        ->assertSee("<td>{$this->status1->name}</td>", false)
+        ->assertSee('<td>FirstUser</td>', false)
+        ->assertDontSee("<td>{$this->status2->name}</td>", false)
+        ->assertDontSee('<td>SecondUser</td>', false);
     }
 }

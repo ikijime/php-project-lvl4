@@ -6,8 +6,6 @@ use Illuminate\View\Component;
 
 class AlertConfirmDelete extends Component
 {
-    public $message;
-    public $item;
     /**
      * Create a new component instance.
      *

@@ -6,13 +6,13 @@ use Illuminate\View\Component;
 
 class AlertUnableDelete extends Component
 {
-    public $message;
+    public mixed $message;
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($message)
+    public function __construct(mixed $message)
     {
         $this->message = $message;
     }
